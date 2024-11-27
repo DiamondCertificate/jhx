@@ -117,7 +117,7 @@ const ConsumerDashboard = () => {
               fontWeight: 'bold'
             }}
           >
-            我的钻石证书
+            My Diamond Certificates
           </Typography>
           <Typography 
             align="center" 
@@ -127,7 +127,7 @@ const ConsumerDashboard = () => {
               fontSize: '1.1rem'
             }}
           >
-            管理和查看您的钻石证书
+            Manage and view your diamond certificates
           </Typography>
 
           <Stack spacing={3}>
@@ -153,12 +153,12 @@ const ConsumerDashboard = () => {
                               {diamond.id}
                             </Typography>
                             <Typography variant="body2" sx={{ color: '#666' }}>
-                              购买日期: {diamond.purchaseDate}
+                              purchaseDate: {diamond.purchaseDate}
                             </Typography>
                           </Box>
                         </Stack>
                         <Chip 
-                          label={diamond.status === 'active' ? '已激活' : '待处理'}
+                          label={diamond.status === 'active' ? 'Already activated' : 'Pending'}
                           sx={{ 
                             background: diamond.status === 'active' ? 
                               'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)' : 
@@ -180,25 +180,25 @@ const ConsumerDashboard = () => {
                         transition: 'background-color 0.3s ease'
                       }}>
                         <Typography variant="subtitle1" gutterBottom sx={{ color: '#1a237e', fontWeight: 'bold' }}>
-                          钻石详情
+                          Diamond Details
                         </Typography>
                         <Stack direction={{ xs: 'column', sm: 'row' }} 
                                spacing={3} 
                                justifyContent="space-between">
                           <Box>
-                            <Typography color="text.secondary">重量</Typography>
-                            <Typography fontWeight="bold">{diamond.details.weight}克拉</Typography>
+                            <Typography color="text.secondary">Weight</Typography>
+                            <Typography fontWeight="bold">{diamond.details.weight}carats</Typography>
                           </Box>
                           <Box>
-                            <Typography color="text.secondary">颜色</Typography>
+                            <Typography color="text.secondary">Color</Typography>
                             <Typography fontWeight="bold">{diamond.details.color}</Typography>
                           </Box>
                           <Box>
-                            <Typography color="text.secondary">净度</Typography>
+                            <Typography color="text.secondary">Clarity</Typography>
                             <Typography fontWeight="bold">{diamond.details.clarity}</Typography>
                           </Box>
                           <Box>
-                            <Typography color="text.secondary">切工</Typography>
+                            <Typography color="text.secondary">Cut</Typography>
                             <Typography fontWeight="bold">{diamond.details.cut}</Typography>
                           </Box>
                         </Stack>
@@ -206,20 +206,20 @@ const ConsumerDashboard = () => {
 
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <Typography variant="body2" sx={{ color: '#666' }}>
-                          证书编号: {diamond.certificateNo}
+                          CertificateNumbers: {diamond.certificateNo}
                         </Typography>
                         <Stack direction="row" spacing={1}>
-                          <Tooltip title="下载证书">
+                          <Tooltip title="Download Certificate">
                             <StyledIconButton onClick={() => handleDownloadCertificate(diamond.id)}>
                               <DownloadIcon sx={{ color: '#89CFF0' }} />
                             </StyledIconButton>
                           </Tooltip>
-                          <Tooltip title="分享">
+                          <Tooltip title="Share">
                             <StyledIconButton onClick={() => handleShare(diamond.id)}>
                               <ShareIcon sx={{ color: '#89CFF0' }} />
                             </StyledIconButton>
                           </Tooltip>
-                          <Tooltip title="查看二维码">
+                          <Tooltip title="View QR Code">
                             <StyledIconButton>
                               <QrCodeIcon sx={{ color: '#89CFF0' }} />
                             </StyledIconButton>
@@ -239,7 +239,7 @@ const ConsumerDashboard = () => {
               size="large"
               onClick={() => navigate('/consumer/verify')}
             >
-              验证新钻石
+              Authenticate New Diamonds
             </GradientButton>
           </Box>
         </GlassContainer>

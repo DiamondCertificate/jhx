@@ -37,7 +37,7 @@ const Verify = () => {
           id: searchId,
           isAuthentic: true,
           details: {
-            manufacturer: "XXX珠宝公司",
+            manufacturer: "XXX Jewelry Company",
             manufactureDate: "2024-01-15",
             weight: "1.5",
             color: "D",
@@ -46,17 +46,17 @@ const Verify = () => {
             certificateNo: "GIA2196152152"
           },
           history: [
-            { date: "2024-01-01", event: "开采" },
-            { date: "2024-01-10", event: "切割打磨" },
-            { date: "2024-01-15", event: "认证" },
-            { date: "2024-01-20", event: "制造" }
+            { date: "2024-01-01", event: "Mine" },
+            { date: "2024-01-10", event: "Cut and Polish" },
+            { date: "2024-01-15", event: "Authenticate" },
+            { date: "2024-01-20", event: "Manufacture" }
           ]
         });
       } else {
-        setError('请输入钻石ID或证书编号');
+        setError('Please enter the diamond ID or certificate number');
       }
     } catch (err) {
-      setError('验证过程中出现错误，请重试');
+      setError('An error occurred during verification, please try again');
       console.error('Verification error:', err);
     } finally {
       setLoading(false);
@@ -67,8 +67,9 @@ const Verify = () => {
     <Container maxWidth="md">
       <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
         <Typography variant="h4" align="center" gutterBottom 
-                  sx={{ color: '#2E7D32', fontWeight: 'bold' }}>
-          钻石真实性验证
+                  sx={{ color: '#2E7D32', fontWeight: 'bold' }}
+        >
+          Diamond Authenticity Verification
         </Typography>
 
         <Box sx={{ my: 4 }}>
@@ -76,7 +77,7 @@ const Verify = () => {
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <TextField
                 fullWidth
-                label="输入钻石ID或证书编号"
+                label="Enter diamond ID or certificate number"
                 value={searchId}
                 onChange={(e) => setSearchId(e.target.value)}
                 sx={{ flex: 1 }}
@@ -86,7 +87,7 @@ const Verify = () => {
                 startIcon={<QrCodeScannerIcon />}
                 sx={{ height: 56 }}
               >
-                扫描二维码
+                Scan QR code
               </Button>
             </Stack>
 
@@ -103,7 +104,7 @@ const Verify = () => {
               onClick={handleVerify}
               disabled={loading || !searchId}
             >
-              {loading ? '验证中...' : '验证真实性'}
+              {loading ? 'Under verification...' : 'Verify Authenticity'}
             </Button>
           </Stack>
         </Box>
@@ -114,12 +115,12 @@ const Verify = () => {
               <CardContent>
                 <Stack direction="row" alignItems="center" spacing={1} mb={2}>
                   <VerifiedIcon color="success" />
-                  <Typography variant="h6">验证结果</Typography>
+                  <Typography variant="h6">Verify result</Typography>
                 </Stack>
                 <Divider />
                 <Box sx={{ mt: 2 }}>
                   <Chip 
-                    label={verificationResult.isAuthentic ? "认证通过" : "验证失败"} 
+                    label={verificationResult.isAuthentic ? "Certification Passed" : "Certification Failed"} 
                     color={verificationResult.isAuthentic ? "success" : "error"}
                     sx={{ mb: 2 }}
                   />
@@ -127,13 +128,13 @@ const Verify = () => {
                     {Object.entries(verificationResult.details).map(([key, value]) => (
                       <Box key={key} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Typography color="text.secondary">
-                          {key === 'manufacturer' ? '制造商' :
-                           key === 'manufactureDate' ? '制造日期' :
-                           key === 'weight' ? '重量' :
-                           key === 'color' ? '颜色' :
-                           key === 'clarity' ? '净度' :
-                           key === 'cut' ? '切工' :
-                           key === 'certificateNo' ? '证书编号' : key}:
+                          {key === 'manufacturer' ? 'manufacturer' :
+                           key === 'manufactureDate' ? 'manufactureDate' :
+                           key === 'weight' ? 'weight' :
+                           key === 'color' ? 'color' :
+                           key === 'clarity' ? 'clarity' :
+                           key === 'cut' ? 'cut' :
+                           key === 'certificateNo' ? 'certificateNo' : key}
                         </Typography>
                         <Typography>{value}</Typography>
                       </Box>
@@ -147,7 +148,7 @@ const Verify = () => {
               <CardContent>
                 <Stack direction="row" alignItems="center" spacing={1} mb={2}>
                   <TimelineIcon color="primary" />
-                  <Typography variant="h6">生命周期记录</Typography>
+                  <Typography variant="h6">Life Cycle Records</Typography>
                 </Stack>
                 <Divider />
                 <Box sx={{ mt: 2 }}>

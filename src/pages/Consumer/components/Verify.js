@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import TimelineIcon from '@mui/icons-material/Timeline';
+//import TimelineIcon from '@mui/icons-material/Timeline';
 import SearchIcon from '@mui/icons-material/Search';
 
 // 自定义样式组件
@@ -79,7 +79,7 @@ const Verify = () => {
         id: searchId,
         isAuthentic: true,
         details: {
-          manufacturer: "XXX珠宝公司",
+          manufacturer: "XXX Jewelry Company",
           manufactureDate: "2024-01-15",
           weight: "1.5",
           color: "D",
@@ -88,11 +88,12 @@ const Verify = () => {
           certificateNo: "GIA2196152152"
         },
         history: [
-          { date: "2024-01-01", event: "开采" },
-          { date: "2024-01-10", event: "切割打磨" },
-          { date: "2024-01-15", event: "认证" },
-          { date: "2024-01-20", event: "制造" }
+          { date: "2024-01-01", event: "Mine" },
+          { date: "2024-01-10", event: "Cut and Polish" },
+          { date: "2024-01-15", event: "Authenticate" },
+          { date: "2024-01-20", event: "Manufacture" }
         ]
+      
       });
     }
   };
@@ -112,14 +113,14 @@ const Verify = () => {
               fontWeight: 'bold'
             }}
           >
-            钻石真实性验证
+            Diamond Authenticity Verification
           </Typography>
 
           <Box sx={{ my: 4 }}>
             <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
               <StyledTextField
                 fullWidth
-                label="输入钻石ID或证书编号"
+                label="Enter diamond ID or certificate number"
                 value={searchId}
                 onChange={(e) => setSearchId(e.target.value)}
                 variant="outlined"
@@ -128,7 +129,7 @@ const Verify = () => {
                 startIcon={<QrCodeScannerIcon />}
                 onClick={() => setShowScanner(!showScanner)}
               >
-                扫描二维码
+                Scan QR code
               </GradientButton>
             </Stack>
 
@@ -138,7 +139,7 @@ const Verify = () => {
                 disabled={!searchId}
                 startIcon={<SearchIcon />}
               >
-                验证真实性
+                Verify Authenticity
               </GradientButton>
             </Box>
           </Box>
@@ -152,13 +153,13 @@ const Verify = () => {
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <VerifiedIcon sx={{ color: '#89CFF0', fontSize: 30 }} />
                         <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#1a237e' }}>
-                          验证结果
+                          Verify result
                         </Typography>
                       </Box>
                       <Divider sx={{ borderColor: 'rgba(137, 207, 240, 0.2)' }} />
                       <Box>
                         <Chip 
-                          label={verificationResult.isAuthentic ? "认证通过" : "验证失败"}
+                          label={verificationResult.isAuthentic ? "Certification Passed" : "Certification Failed"}
                           sx={{ 
                             mb: 3,
                             p: 2,
@@ -179,53 +180,19 @@ const Verify = () => {
                               '&:hover': { bgcolor: 'rgba(137, 207, 240, 0.1)' }
                             }}>
                               <Typography color="text.secondary">
-                                {key === 'manufacturer' ? '制造商' :
-                                 key === 'manufactureDate' ? '制造日期' :
-                                 key === 'weight' ? '重量' :
-                                 key === 'color' ? '颜色' :
-                                 key === 'clarity' ? '净度' :
-                                 key === 'cut' ? '切工' :
-                                 key === 'certificateNo' ? '证书编号' : key}
+                                {key === 'manufacturer' ? 'manufacturer' :
+                                 key === 'manufactureDate' ? 'manufactureDate' :
+                                 key === 'weight' ? 'weight' :
+                                 key === 'color' ? 'color' :
+                                 key === 'clarity' ? 'clarity' :
+                                 key === 'cut' ? 'cut' :
+                                 key === 'certificateNo' ? 'certificateNo' : key}
                               </Typography>
                               <Typography sx={{ fontWeight: 'bold' }}>{value}</Typography>
                             </Box>
                           ))}
                         </Stack>
                       </Box>
-                    </Stack>
-                  </CardContent>
-                </ResultCard>
-              </Zoom>
-
-              <Zoom in timeout={700}>
-                <ResultCard>
-                  <CardContent>
-                    <Stack spacing={3}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <TimelineIcon sx={{ color: '#89CFF0', fontSize: 30 }} />
-                        <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#1a237e' }}>
-                          生命周期记录
-                        </Typography>
-                      </Box>
-                      <Divider sx={{ borderColor: 'rgba(137, 207, 240, 0.2)' }} />
-                      <Stack spacing={2}>
-                        {verificationResult.history.map((item, index) => (
-                          <Box key={index} sx={{ 
-                            display: 'flex', 
-                            justifyContent: 'space-between',
-                            p: 2,
-                            borderRadius: 2,
-                            '&:hover': { 
-                              bgcolor: 'rgba(137, 207, 240, 0.1)',
-                              transform: 'translateX(10px)',
-                            },
-                            transition: 'all 0.3s ease'
-                          }}>
-                            <Typography sx={{ fontWeight: 'bold' }}>{item.event}</Typography>
-                            <Typography sx={{ color: '#666' }}>{item.date}</Typography>
-                          </Box>
-                        ))}
-                      </Stack>
                     </Stack>
                   </CardContent>
                 </ResultCard>

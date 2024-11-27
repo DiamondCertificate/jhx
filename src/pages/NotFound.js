@@ -9,10 +9,10 @@ const NotFound = () => {
           404
         </Typography>
         <Typography variant="h5" component="h2" gutterBottom>
-          页面未找到
+          Page Not Found
         </Typography>
         <Button component={Link} to="/" variant="contained" sx={{ mt: 3 }}>
-          返回首页
+          Back to Home
         </Button>
       </Box>
     </Container>
