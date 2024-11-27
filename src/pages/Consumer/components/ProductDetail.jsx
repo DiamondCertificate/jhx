@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Web3 from 'web3';
 import {
   Container,
   Typography,
@@ -12,11 +13,20 @@ import {
   Link,
   Divider,
   Fade,
-  Zoom
+  Zoom,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  CircularProgress,
+  Snackbar,
+  Alert
 } from '@mui/material';
 import LaunchIcon from '@mui/icons-material/Launch';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { styled } from '@mui/material/styles';
+
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   background: 'rgba(255, 255, 255, 0.25)',
@@ -46,8 +56,118 @@ const ImageContainer = styled(Box)(({ theme }) => ({
   }
 }));
 
+const GradientButton = styled(Button)(({ theme }) => ({
+  background: 'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
+  border: 0,
+  borderRadius: 12,
+  boxShadow: '0 3px 5px 2px rgba(137, 207, 240, .3)',
+  color: 'white',
+  padding: '12px 30px',
+  '&:hover': {
+    background: 'linear-gradient(45deg, #B6E0FF 30%, #89CFF0 90%)',
+    transform: 'scale(1.02)',
+  },
+  transition: 'all 0.3s ease',
+}));
+
 const ProductDetail = () => {
   const { id } = useParams();
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isPurchasing, setIsPurchasing] = useState(false);
+  const [purchaseSuccess, setPurchaseSuccess] = useState(false);
+  const [error, setError] = useState('');
+  const [walletConnected, setWalletConnected] = useState(false);
+
+  // 连接 MetaMask
+  const connectWallet = async () => {
+    try {
+      if (!window.ethereum) {
+        setError('请先安装 MetaMask 钱包');
+        return;
+      }
+
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      });
+
+      if (accounts.length > 0) {
+        setWalletConnected(true);
+        handlePurchase();
+      }
+    } catch (err) {
+      setError('连接钱包失败：' + err.message);
+    }
+  };
+
+
+  const CONTRACT_ABI = [
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "tokenId",
+          "type": "uint256"
+        }
+      ],
+      "name": "purchaseJewelry",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    }
+  ];
+
+  // 处理购买
+  const handlePurchase = async () => {
+    try {
+      setIsPurchasing(true);
+      setError('');
+
+      if (!window.ethereum) {
+        throw new Error('请安装 MetaMask 钱包');
+      }
+  
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      });
+  
+      if (!accounts || accounts.length === 0) {
+        throw new Error('请先连接 MetaMask 钱包');
+      }
+  
+      const account = accounts[0];
+      const web3 = new Web3(window.ethereum);
+  
+      // 创建合约实例
+    const contract = new web3.eth.Contract(CONTRACT_ABI, contractAddress);
+    
+    // 编码合约调用
+    const data = contract.methods.purchaseJewelry(product.id).encodeABI();
+
+    // 构造交易参数
+    const transactionParameters = {
+      to: contractAddress,
+      from: account,
+      value: web3.utils.toHex(web3.utils.toWei(product.price.toString(), 'ether')),
+      data: data
+    };
+
+    // 发送交易
+    const txHash = await window.ethereum.request({
+      method: 'eth_sendTransaction',
+      params: [transactionParameters],
+    });
+
+    console.log('Transaction Hash:', txHash);
+    setPurchaseSuccess(true);
+    setIsDialogOpen(false);
+
+  } catch (err) {
+    console.error('Purchase error:', err);
+    setError('购买失败：' + (err.message || '未知错误'));
+  } finally {
+    setIsPurchasing(false);
+  }
+};
   
   // 模拟商品数据
   const product = {
@@ -137,6 +257,17 @@ const ProductDetail = () => {
                 {product.description}
               </Typography>
 
+              {/* 添加购买按钮 */}
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <GradientButton
+                  startIcon={<AccountBalanceWalletIcon />}
+                  onClick={() => setIsDialogOpen(true)}
+                  size="large"
+                >
+                  立即购买
+                </GradientButton>
+              </Box>
+
               <GlassCard>
                 <CardContent>
                   <Stack spacing={2}>
@@ -206,8 +337,64 @@ const ProductDetail = () => {
           </Zoom>
         </Box>
       </Stack>
+
+      {/* 购买确认对话框 */}
+      <Dialog open={isDialogOpen} onClose={() => !isPurchasing && setIsDialogOpen(false)}>
+        <DialogTitle>
+          确认购买
+        </DialogTitle>
+        <DialogContent>
+          <Stack spacing={2}>
+            <Typography>
+              商品：{product.name}
+            </Typography>
+            <Typography>
+              价格：¥ {product.price.toLocaleString()}
+            </Typography>
+            <Typography color="text.secondary" variant="body2">
+              点击确认后将通过 MetaMask 进行支付
+            </Typography>
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button 
+            onClick={() => setIsDialogOpen(false)} 
+            disabled={isPurchasing}
+          >
+            取消
+          </Button>
+          <GradientButton
+            onClick={connectWallet}
+            disabled={isPurchasing}
+            startIcon={isPurchasing ? <CircularProgress size={20} /> : <AccountBalanceWalletIcon />}
+          >
+            {isPurchasing ? '交易处理中...' : '确认购买'}
+          </GradientButton>
+        </DialogActions>
+      </Dialog>
+
+      {/* 错误提示 */}
+      <Snackbar 
+        open={!!error} 
+        autoHideDuration={6000} 
+        onClose={() => setError('')}
+      >
+        <Alert severity="error" onClose={() => setError('')}>
+          {error}
+        </Alert>
+      </Snackbar>
+
+      {/* 购买成功提示 */}
+      <Snackbar 
+        open={purchaseSuccess} 
+        autoHideDuration={6000} 
+        onClose={() => setPurchaseSuccess(false)}
+      >
+        <Alert severity="success" onClose={() => setPurchaseSuccess(false)}>
+          购买成功！您已拥有该钻石证书
+        </Alert>
+      </Snackbar>
     </StyledContainer>
   );
 };
-
 export default ProductDetail;
