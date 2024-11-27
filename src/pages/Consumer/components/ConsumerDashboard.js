@@ -17,6 +17,9 @@ import {
   Zoom
 } from '@mui/material';
 import DiamondIcon from '@mui/icons-material/Diamond';
+import VerifiedIcon from '@mui/icons-material/Verified';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import SearchIcon from '@mui/icons-material/Search';
 import DownloadIcon from '@mui/icons-material/Download';
 import ShareIcon from '@mui/icons-material/Share';
 import QrCodeIcon from '@mui/icons-material/QrCode';
@@ -30,6 +33,31 @@ const GlassContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
   border: '1px solid rgba(255, 255, 255, 0.18)',
   boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+}));
+
+
+const FeatureCard = styled(Card)(({ theme }) => ({
+  background: 'rgba(255, 255, 255, 0.15)',
+  backdropFilter: 'blur(10px)',
+  borderRadius: 15,
+  transition: 'transform 0.3s ease',
+  cursor: 'pointer',
+  '&:hover': {
+    transform: 'translateY(-10px)',
+  },
+}));
+
+const IconWrapper = styled(Box)(({ theme }) => ({
+  width: 80,
+  height: 80,
+  borderRadius: '50%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  margin: '0 auto',
+  marginBottom: theme.spacing(3),
+  background: 'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
+  boxShadow: '0 3px 5px 2px rgba(137, 207, 240, .3)',
 }));
 
 const DiamondCard = styled(Card)(({ theme }) => ({
@@ -67,6 +95,26 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 
 const ConsumerDashboard = () => {
   const navigate = useNavigate();
+  const features = [
+    {
+      icon: <ShoppingBagIcon sx={{ fontSize: 40, color: 'white' }} />,
+      title: "购买珠宝",
+      description: "浏览和购买认证珠宝",
+      path: "/consumer/products"
+    },
+    {
+      icon: <SearchIcon sx={{ fontSize: 40, color: 'white' }} />,
+      title: "验证真实性",
+      description: "验证钻石证书的真实性",
+      path: "/consumer/verify"
+    },
+    {
+      icon: <DiamondIcon sx={{ fontSize: 40, color: 'white' }} />,
+      title: "我的证书",
+      description: "查看我的钻石证书",
+      path: "/consumer/certificates"
+    }
+  ];
   const [myDiamonds] = useState([
     {
       id: 'DIA001',
@@ -103,7 +151,7 @@ const ConsumerDashboard = () => {
   };
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="lg">
       <Fade in timeout={1000}>
         <GlassContainer elevation={3} sx={{ mt: 4 }}>
           <Typography 
@@ -117,130 +165,55 @@ const ConsumerDashboard = () => {
               fontWeight: 'bold'
             }}
           >
-            My Diamond Certificates
+            Consumer Center
           </Typography>
           <Typography 
             align="center" 
             sx={{ 
-              mb: 4,
+              mb: 6,
               color: '#666',
               fontSize: '1.1rem'
             }}
           >
-            Manage and view your diamond certificates
+            Pick or View your Jewelry
           </Typography>
-
-          <Stack spacing={3}>
-            {myDiamonds.map((diamond, index) => (
-              <Zoom in timeout={500 + index * 200} key={diamond.id}>
-                <DiamondCard>
-                  <CardContent sx={{ p: 3 }}>
-                    <Stack spacing={3}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <Stack direction="row" spacing={2} alignItems="center">
-                          <Avatar 
-                            sx={{ 
-                              bgcolor: 'transparent',
-                              background: 'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
-                              width: 56,
-                              height: 56
-                            }}
-                          >
-                            <DiamondIcon sx={{ fontSize: 30, color: 'white' }} />
-                          </Avatar>
-                          <Box>
-                            <Typography variant="h6" sx={{ color: '#1a237e', fontWeight: 'bold' }}>
-                              {diamond.id}
-                            </Typography>
-                            <Typography variant="body2" sx={{ color: '#666' }}>
-                              purchaseDate: {diamond.purchaseDate}
-                            </Typography>
-                          </Box>
-                        </Stack>
-                        <Chip 
-                          label={diamond.status === 'active' ? 'Already activated' : 'Pending'}
-                          sx={{ 
-                            background: diamond.status === 'active' ? 
-                              'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)' : 
-                              'linear-gradient(45deg, #FFB347 30%, #FFE0B2 90%)',
-                            color: 'white',
-                            fontWeight: 'bold',
-                            px: 2
-                          }}
-                        />
-                      </Box>
-
-                      <Box sx={{ 
-                        bgcolor: 'rgba(137, 207, 240, 0.1)', 
-                        p: 3, 
-                        borderRadius: 2,
-                        '&:hover': {
-                          bgcolor: 'rgba(137, 207, 240, 0.15)',
-                        },
-                        transition: 'background-color 0.3s ease'
-                      }}>
-                        <Typography variant="subtitle1" gutterBottom sx={{ color: '#1a237e', fontWeight: 'bold' }}>
-                          Diamond Details
-                        </Typography>
-                        <Stack direction={{ xs: 'column', sm: 'row' }} 
-                               spacing={3} 
-                               justifyContent="space-between">
-                          <Box>
-                            <Typography color="text.secondary">Weight</Typography>
-                            <Typography fontWeight="bold">{diamond.details.weight}carats</Typography>
-                          </Box>
-                          <Box>
-                            <Typography color="text.secondary">Color</Typography>
-                            <Typography fontWeight="bold">{diamond.details.color}</Typography>
-                          </Box>
-                          <Box>
-                            <Typography color="text.secondary">Clarity</Typography>
-                            <Typography fontWeight="bold">{diamond.details.clarity}</Typography>
-                          </Box>
-                          <Box>
-                            <Typography color="text.secondary">Cut</Typography>
-                            <Typography fontWeight="bold">{diamond.details.cut}</Typography>
-                          </Box>
-                        </Stack>
-                      </Box>
-
-                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Typography variant="body2" sx={{ color: '#666' }}>
-                          CertificateNumbers: {diamond.certificateNo}
-                        </Typography>
-                        <Stack direction="row" spacing={1}>
-                          <Tooltip title="Download Certificate">
-                            <StyledIconButton onClick={() => handleDownloadCertificate(diamond.id)}>
-                              <DownloadIcon sx={{ color: '#89CFF0' }} />
-                            </StyledIconButton>
-                          </Tooltip>
-                          <Tooltip title="Share">
-                            <StyledIconButton onClick={() => handleShare(diamond.id)}>
-                              <ShareIcon sx={{ color: '#89CFF0' }} />
-                            </StyledIconButton>
-                          </Tooltip>
-                          <Tooltip title="View QR Code">
-                            <StyledIconButton>
-                              <QrCodeIcon sx={{ color: '#89CFF0' }} />
-                            </StyledIconButton>
-                          </Tooltip>
-                        </Stack>
-                      </Box>
-                    </Stack>
+          
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: { xs: 'column', md: 'row' },
+            gap: 4,
+            mb: 4
+          }}>
+            {features.map((feature, index) => (
+              <Zoom in timeout={500 + index * 200} key={index}>
+                <FeatureCard onClick={() => navigate(feature.path)} sx={{ flex: 1 }}>
+                  <CardContent sx={{ p: 4, textAlign: 'center' }}>
+                    <IconWrapper>
+                      {feature.icon}
+                    </IconWrapper>
+                    <Typography 
+                      variant="h5" 
+                      sx={{ 
+                        fontWeight: 'bold',
+                        color: '#1a237e',
+                        mb: 2
+                      }}
+                    >
+                      {feature.title}
+                    </Typography>
+                    <Typography 
+                      variant="body1"
+                      sx={{
+                        color: '#666',
+                        lineHeight: 1.6
+                      }}
+                    >
+                      {feature.description}
+                    </Typography>
                   </CardContent>
-                </DiamondCard>
+                </FeatureCard>
               </Zoom>
             ))}
-          </Stack>
-
-          <Box sx={{ mt: 4, textAlign: 'center' }}>
-            <GradientButton
-              startIcon={<QrCodeIcon />}
-              size="large"
-              onClick={() => navigate('/consumer/verify')}
-            >
-              Authenticate New Diamonds
-            </GradientButton>
           </Box>
         </GlassContainer>
       </Fade>
