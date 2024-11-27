@@ -5,6 +5,7 @@ import theme from './styles/theme';
 import Navbar from './components/Layout/Navbar';
 import AppRoutes from './AppRoutes';
 
+
 function App() {
   return (
     <ThemeProvider theme={theme}>

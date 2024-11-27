@@ -1,93 +1,125 @@
-import { Container, Card, CardContent, Typography, Box, Stack } from '@mui/material';
+import { Container, Card, CardContent, Typography, Box, styled } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import DiamondIcon from '@mui/icons-material/Diamond';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import TimelineIcon from '@mui/icons-material/Timeline';
 
+const GlassCard = styled(Card)(({ theme }) => ({
+  background: 'rgba(255, 255, 255, 0.25)',
+  backdropFilter: 'blur(10px)',
+  borderRadius: theme.spacing(2),
+  border: '1px solid rgba(255, 255, 255, 0.18)',
+  boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+  cursor: 'pointer',
+  height: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  transition: 'all 0.3s ease',
+  '&:hover': {
+    transform: 'translateY(-10px)',
+    background: 'rgba(255, 255, 255, 0.35)',
+  },
+}));
+
+const IconWrapper = styled(Box)(({ theme }) => ({
+  width: 80,
+  height: 80,
+  borderRadius: '50%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  margin: '0 auto',
+  marginBottom: theme.spacing(3),
+  background: 'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
+  boxShadow: '0 3px 5px 2px rgba(137, 207, 240, .3)',
+}));
+
 const Dashboard = () => {
+  const navigate = useNavigate();
+
   const features = [
     {
-      icon: <DiamondIcon sx={{ fontSize: 40 }} />,
+      icon: <DiamondIcon sx={{ fontSize: 40, color: 'white' }} />,
       title: "证书创建",
-      description: "为钻石创建唯一的数字证书"
+      description: "为钻石创建唯一的数字证书",
+      path: "/manufacturer/create",
+      gradient: "linear-gradient(135deg, #89CFF0 0%, #B6E0FF 100%)"
     },
     {
-      icon: <VerifiedIcon sx={{ fontSize: 40 }} />,
+      icon: <VerifiedIcon sx={{ fontSize: 40, color: 'white' }} />,
       title: "真实性验证",
-      description: "验证钻石证书的真实性"
+      description: "验证钻石证书的真实性",
+      path: "/consumer/verify",
+      gradient: "linear-gradient(135deg, #B6E0FF 0%, #89CFF0 100%)"
     },
     {
-      icon: <TimelineIcon sx={{ fontSize: 40 }} />,
+      icon: <TimelineIcon sx={{ fontSize: 40, color: 'white' }} />,
       title: "生命周期追踪",
-      description: "追踪钻石的完整生命周期"
+      description: "追踪钻石的完整生命周期",
+      path: "/lifecycle/track",
+      gradient: "linear-gradient(135deg, #89CFF0 0%, #B6E0FF 100%)"
     }
   ];
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h3" gutterBottom align="center" sx={{ mb: 4 }}>
-        钻石认证系统
+    <Container maxWidth="lg" sx={{ mt: 8, mb: 4 }}>
+      <Typography 
+        variant="h3" 
+        align="center" 
+        sx={{ 
+          mb: 6,
+          fontWeight: 'bold',
+          background: 'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+        }}
+      >
+        欢迎使用钻石认证系统
       </Typography>
       
       <Box sx={{ 
         display: 'flex', 
         flexDirection: { xs: 'column', md: 'row' },
-        gap: 3
+        gap: 4
       }}>
         {features.map((feature, index) => (
-          <Box key={index} sx={{ flex: 1 }}>
-            <Card sx={{ 
-              height: '100%', 
-              display: 'flex', 
-              flexDirection: 'column',
-              '&:hover': {
-                transform: 'translateY(-5px)',
-                transition: 'transform 0.3s'
-              }
+          <GlassCard 
+            key={index} 
+            onClick={() => navigate(feature.path)}
+            sx={{ flex: 1 }}
+          >
+            <CardContent sx={{ 
+              flexGrow: 1, 
+              textAlign: 'center',
+              p: 4,
             }}>
-              <CardContent sx={{ flexGrow: 1, textAlign: 'center' }}>
-                <Box sx={{ mb: 2, color: 'primary.main' }}>
-                  {feature.icon}
-                </Box>
-                <Typography gutterBottom variant="h5" component="h2">
-                  {feature.title}
-                </Typography>
-                <Typography color="text.secondary">
-                  {feature.description}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Box>
-        ))}
-      </Box>
-      
-      {/* 可选：使用 Stack 组件的版本 */}
-      {/* <Stack 
-        direction={{ xs: 'column', md: 'row' }}
-        spacing={3}
-      >
-        {features.map((feature, index) => (
-          <Card key={index} sx={{ 
-            flex: 1,
-            height: '100%', 
-            '&:hover': {
-              transform: 'translateY(-5px)',
-              transition: 'transform 0.3s'
-            }
-          }}>
-            <CardContent sx={{ textAlign: 'center' }}>
-              <Box sx={{ mb: 2, color: 'primary.main' }}>
+              <IconWrapper>
                 {feature.icon}
-              </Box>
-              <Typography gutterBottom variant="h5" component="h2">
+              </IconWrapper>
+              <Typography 
+                gutterBottom 
+                variant="h5" 
+                sx={{ 
+                  fontWeight: 'bold',
+                  color: '#1a237e',
+                  mb: 2
+                }}
+              >
                 {feature.title}
               </Typography>
-              <Typography color="text.secondary">
+              <Typography 
+                variant="body1"
+                sx={{
+                  color: '#666',
+                  lineHeight: 1.6
+                }}
+              >
                 {feature.description}
               </Typography>
             </CardContent>
-          </Card>
+          </GlassCard>
         ))}
-      </Stack> */}
+      </Box>
     </Container>
   );
 };
