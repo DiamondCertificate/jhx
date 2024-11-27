@@ -7,12 +7,12 @@ const DiamondCard = ({ diamond }) => {
       <CardContent>
         <Box display="flex" alignItems="center" mb={2}>
           <DiamondIcon sx={{ mr: 1 }} />
-          <Typography variant="h6">钻石信息</Typography>
+          <Typography variant="h6">Diamond Information</Typography>
         </Box>
-        <Typography>证书编号: {diamond.id}</Typography>
-        <Typography>重量: {diamond.weight} 克拉</Typography>
-        <Typography>颜色: {diamond.color}</Typography>
-        <Typography>净度: {diamond.clarity}</Typography>
+        <Typography>Certificateid: {diamond.id}</Typography>
+        <Typography>Weight: {diamond.weight} carats</Typography>
+        <Typography>Color: {diamond.color}</Typography>
+        <Typography>Clarity: {diamond.clarity}</Typography>
       </CardContent>
     </Card>
   );

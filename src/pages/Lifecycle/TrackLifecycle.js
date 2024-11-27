@@ -42,33 +42,33 @@ const LifecycleTrack = () => {
       <Paper elevation={3} sx={{ p: 4, mt: 4, borderRadius: 2 }}>
         <Typography variant="h4" align="center" gutterBottom 
                   sx={{ color: '#1976d2', fontWeight: 'bold' }}>
-          钻石生命周期追踪
+          Diamond Lifecycle Tracking
         </Typography>
 
         <Timeline position="alternate">
           <TimelineEvent
             icon={<DiamondIcon />}
-            title="原石开采"
+            title="Rough Diamond Mining"
             date="2024-01-01"
-            description="南非金伯利矿区开采"
+            description="Kimberley Mining in South Africa"
           />
           <TimelineEvent
             icon={<FactoryIcon />}
-            title="切割打磨"
+            title="Cutting and Polishing"
             date="2024-01-15"
-            description="安特卫普切割中心完成加工"
+            description="Complete processing at the Antwerp cutting center"
           />
           <TimelineEvent
             icon={<VerifiedUserIcon />}
-            title="品质认证"
+            title="Quality Certification"
             date="2024-02-01"
-            description="GIA认证完成"
+            description="GIA certification completed"
           />
           <TimelineEvent
             icon={<LocalShippingIcon />}
-            title="运送至零售商"
+            title="Delivery to retailers"
             date="2024-02-15"
-            description="到达指定零售店"
+            description="Arrive at the designated retail store"
           />
         </Timeline>
       </Paper>

@@ -40,12 +40,12 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const GradientButton = styled(StyledButton)(({ theme }) => ({
-  background: 'linear-gradient(45deg, #FF6B6B 30%, #FFE66D 90%)',
+  background: /*'linear-gradient(45deg, #FF6B6B 30%, #FFE66D 90%)'*/'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
   border: 0,
   color: 'white',
   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   '&:hover': {
-    background: 'linear-gradient(45deg, #FFE66D 30%, #FF6B6B 90%)',
+    background: /*'linear-gradient(45deg, #FFE66D 30%, #FF6B6B 90%)'*/'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
     transform: 'scale(1.02)',
   },
 }));
@@ -88,7 +88,7 @@ const ManufacturerCreate = () => {
   });
   const [certificateCreated, setCertificateCreated] = useState(false);
 
-  const steps = ['基本信息', '鉴定细节', '制造信息', '确认创建'];
+  const steps = ['Basic Information', 'Identification Details', 'Manufacturing Information', ' Confirm Creation', 'Keep Adding'];
 
   const handleNext = () => {
     if (activeStep === steps.length - 1) {
@@ -123,7 +123,7 @@ const ManufacturerCreate = () => {
             <StyledTextField
               fullWidth
               name="id"
-              label="钻石ID"
+              label="Diamond ID"
               value={diamondData.id}
               onChange={handleChange}
               variant="outlined"
@@ -131,7 +131,7 @@ const ManufacturerCreate = () => {
             <StyledTextField
               fullWidth
               name="weight"
-              label="重量(克拉)"
+              label="Weight (carats)"
               type="number"
               value={diamondData.weight}
               onChange={handleChange}
@@ -140,7 +140,7 @@ const ManufacturerCreate = () => {
             <StyledTextField
               fullWidth
               name="origin"
-              label="原产地"
+              label="Origin"
               value={diamondData.origin}
               onChange={handleChange}
               variant="outlined"
@@ -153,7 +153,7 @@ const ManufacturerCreate = () => {
             <StyledTextField
               fullWidth
               name="color"
-              label="颜色等级"
+              label="Color Grade"
               value={diamondData.color}
               onChange={handleChange}
               variant="outlined"
@@ -161,7 +161,7 @@ const ManufacturerCreate = () => {
             <StyledTextField
               fullWidth
               name="clarity"
-              label="净度等级"
+              label="Clarity Grade"
               value={diamondData.clarity}
               onChange={handleChange}
               variant="outlined"
@@ -169,7 +169,7 @@ const ManufacturerCreate = () => {
             <StyledTextField
               fullWidth
               name="cut"
-              label="切工等级"
+              label="Cut Grade"
               value={diamondData.cut}
               onChange={handleChange}
               variant="outlined"
@@ -182,7 +182,7 @@ const ManufacturerCreate = () => {
             <StyledTextField
               fullWidth
               name="manufacturer"
-              label="制造商"
+              label="Manufacturer"
               value={diamondData.manufacturer}
               onChange={handleChange}
               variant="outlined"
@@ -190,7 +190,7 @@ const ManufacturerCreate = () => {
             <StyledTextField
               fullWidth
               name="certificateNo"
-              label="证书编号"
+              label="CertificateNo"
               value={diamondData.certificateNo}
               onChange={handleChange}
               variant="outlined"
@@ -203,7 +203,7 @@ const ManufacturerCreate = () => {
             <CardContent>
               <Typography variant="h6" gutterBottom 
                         sx={{ color: '#FF6B6B', fontWeight: 'bold' }}>
-                确认信息
+                Confirmation Information
               </Typography>
               <Stack spacing={2}>
                 {Object.entries(diamondData).map(([key, value]) => (
@@ -215,14 +215,14 @@ const ManufacturerCreate = () => {
                     '&:hover': { bgcolor: 'rgba(255,255,255,0.1)' }
                   }}>
                     <Typography sx={{ color: '#666' }}>
-                      {key === 'id' ? '钻石ID' :
-                       key === 'weight' ? '重量' :
-                       key === 'color' ? '颜色等级' :
-                       key === 'clarity' ? '净度等级' :
-                       key === 'cut' ? '切工等级' :
-                       key === 'origin' ? '原产地' :
-                       key === 'manufacturer' ? '制造商' :
-                       key === 'certificateNo' ? '证书编号' : key}
+                      {key === 'id' ? 'Diamond ID' :
+                       key === 'weight' ? 'Weight (carats)' :
+                       key === 'color' ? 'Color Grade' :
+                       key === 'clarity' ? 'Clarity Grade' :
+                       key === 'cut' ? 'Cut Grade' :
+                       key === 'origin' ? 'Origin' :
+                       key === 'manufacturer' ? 'Manufacturer' :
+                       key === 'certificateNo' ? 'CertificateNo' : key}                
                     </Typography>
                     <Typography sx={{ fontWeight: 'bold' }}>{value}</Typography>
                   </Box>
@@ -244,12 +244,12 @@ const ManufacturerCreate = () => {
             <DiamondIcon sx={{ fontSize: 40, color: '#FF6B6B', mr: 2 }} />
             <Typography variant="h3" 
                       sx={{ 
-                        background: 'linear-gradient(45deg, #FF6B6B 30%, #FFE66D 90%)',
+                        background: 'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         fontWeight: 'bold'
                       }}>
-              创建钻石证书
+              Creating a Diamond Certificate
             </Typography>
           </Box>
 
@@ -262,7 +262,7 @@ const ManufacturerCreate = () => {
                 borderRadius: 5,
                 bgcolor: 'rgba(255,255,255,0.3)',
                 '& .MuiLinearProgress-bar': {
-                  background: 'linear-gradient(45deg, #FF6B6B 30%, #FFE66D 90%)',
+                  background: 'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
                   borderRadius: 5,
                 }
               }}
@@ -293,17 +293,17 @@ const ManufacturerCreate = () => {
                 color: '#FF6B6B',
                 '&:hover': {
                   borderColor: '#FFE66D',
-                  backgroundColor: 'rgba(255,230,109,0.1)',
+                  backgroundColor: 'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
                 }
               }}
             >
-              上一步
+              Back
             </StyledButton>
             <GradientButton
               variant="contained"
               onClick={handleNext}
             >
-              {activeStep === steps.length - 1 ? '创建证书' : '下一步'}
+              {activeStep === steps.length - 1 ? 'Create a certificate' : 'Next'}
             </GradientButton>
           </Box>
 
@@ -312,7 +312,7 @@ const ManufacturerCreate = () => {
               <Box sx={{ mt: 4, textAlign: 'center' }}>
                 <CheckCircleIcon sx={{ fontSize: 60, color: '#4CAF50', mb: 2 }} />
                 <Typography variant="h6" gutterBottom sx={{ color: '#4CAF50' }}>
-                  证书已创建成功！
+                  The certificate has been created successfully!
                 </Typography>
                 <Box sx={{ 
                   mt: 2, 

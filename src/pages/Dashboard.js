@@ -40,22 +40,22 @@ const Dashboard = () => {
   const features = [
     {
       icon: <DiamondIcon sx={{ fontSize: 40, color: 'white' }} />,
-      title: "证书创建",
-      description: "为钻石创建唯一的数字证书",
+      title: "Certificate Creation",
+      description: "Create a unique digital certificate for your diamond",
       path: "/manufacturer/create",
       gradient: "linear-gradient(135deg, #89CFF0 0%, #B6E0FF 100%)"
     },
     {
       icon: <VerifiedIcon sx={{ fontSize: 40, color: 'white' }} />,
-      title: "真实性验证",
-      description: "验证钻石证书的真实性",
+      title: "Authenticity Verification",
+      description: "Verify the authenticity of your diamond certificate",
       path: "/consumer/verify",
       gradient: "linear-gradient(135deg, #B6E0FF 0%, #89CFF0 100%)"
     },
     {
       icon: <TimelineIcon sx={{ fontSize: 40, color: 'white' }} />,
-      title: "生命周期追踪",
-      description: "追踪钻石的完整生命周期",
+      title: "Lifecycle Tracking",
+      description: "Track the entire life cycle of your diamond",
       path: "/lifecycle/track",
       gradient: "linear-gradient(135deg, #89CFF0 0%, #B6E0FF 100%)"
     }
@@ -74,7 +74,7 @@ const Dashboard = () => {
           WebkitTextFillColor: 'transparent',
         }}
       >
-        欢迎使用钻石认证系统
+        Welcome to the Diamond Certification System
       </Typography>
       
       <Box sx={{ 

@@ -28,7 +28,7 @@ const Navbar = () => {
           component={Link} 
           to="/"
         >
-          钻石认证系统
+          Diamond Certification System
         </StyledTitle>
       </Toolbar>
     </GradientAppBar>
