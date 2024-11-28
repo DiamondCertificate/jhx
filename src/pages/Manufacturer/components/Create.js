@@ -21,7 +21,7 @@ import {
 import DiamondIcon from '@mui/icons-material/Diamond';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
-// 自定义样式组件
+// Custom style components
 const GlassContainer = styled(Paper)(({ theme }) => ({
   background: 'rgba(255, 255, 255, 0.25)',
   backdropFilter: 'blur(10px)',
@@ -110,7 +110,7 @@ const ManufacturerCreate = () => {
   };
 
   const handleCreateCertificate = () => {
-    // 这里将来会调用智能合约
+    // In the future, smart contracts will be called here.
     console.log('Creating certificate:', diamondData);
     setCertificateCreated(true);
   };

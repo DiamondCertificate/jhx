@@ -28,11 +28,11 @@ const Verify = () => {
       setLoading(true);
       setError('');
       
-      // 模拟API调用延迟
+      // Simulating API Call Delay
       await new Promise(resolve => setTimeout(resolve, 1000));
 
       if (searchId) {
-        // 模拟验证结果
+        // Simulation verification results
         setVerificationResult({
           id: searchId,
           isAuthentic: true,

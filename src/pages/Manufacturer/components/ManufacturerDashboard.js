@@ -52,15 +52,15 @@ const ManufacturerDashboard = () => {
   const features = [
     {
       icon: <DiamondIcon sx={{ fontSize: 40, color: 'white' }} />,
-      title: "创建证书",
-      description: "为新的珠宝创建数字证书",
+      title: "Creating a certificate",
+      description: "Create digital certificates for new jewelry",
       path: "/manufacturer/create"
     },
     {
       icon: <SwapHorizIcon sx={{ fontSize: 40, color: 'white' }} />,
-      title: "生命周期追踪",
-      description: "查询并更新珠宝的状态",
-      path: "/Lifecycle/track"
+      title: "Life cycle tracking",
+      description: "Check and update the status of the jewelry",
+      path: "/manufacturer/track"
     }
   ];
 
@@ -79,7 +79,7 @@ const ManufacturerDashboard = () => {
               fontWeight: 'bold'
             }}
           >
-            制造商中心
+            Manufacturer's Center
           </Typography>
           <Typography 
             align="center" 
@@ -89,7 +89,7 @@ const ManufacturerDashboard = () => {
               fontSize: '1.1rem'
             }}
           >
-            选择您需要的服务
+            Choose the services you need.
           </Typography>
 
           <Box sx={{ 

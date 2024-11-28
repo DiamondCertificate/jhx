@@ -45,16 +45,16 @@ import AddIcon from '@mui/icons-material/Add';
 
 
 const statusOptions = [
-  { value: 'mining', label: '开采完成', icon: <DiamondIcon /> },
-  { value: 'cutting', label: '切割打磨完成', icon: <FactoryIcon /> },
-  { value: 'quality_control', label: '激光雕刻完成', icon: <VerifiedUserIcon /> },
-  { value: 'received_by_maker', label: '珠宝商收货', icon: <LocalShippingIcon /> },
-  { value: 'design_complete', label: '设计完成', icon: <EditIcon /> },
-  { value: 'inlaying_complete', label: '镶嵌完成', icon: <DiamondIcon /> },
-  { value: 'sold', label: '售出', icon: <LocalShippingIcon /> }
+  { value: 'mining', label: 'Mining completion', icon: <DiamondIcon /> },
+  { value: 'cutting', label: 'Finished cutting and grinding', icon: <FactoryIcon /> },
+  { value: 'quality_control', label: 'Laser engraving completed', icon: <VerifiedUserIcon /> },
+  { value: 'received_by_maker', label: 'Jeweler receives goods', icon: <LocalShippingIcon /> },
+  { value: 'design_complete', label: 'The design is completed.', icon: <EditIcon /> },
+  { value: 'inlaying_complete', label: 'Mosaic completion', icon: <DiamondIcon /> },
+  { value: 'sold', label: 'sold', icon: <LocalShippingIcon /> }
 ];
 
-// 自定义样式组件
+// Custom Style Component
 const GlassContainer = styled(Paper)(({ theme }) => ({
   background: 'rgba(255, 255, 255, 0.25)',
   backdropFilter: 'blur(10px)',
@@ -108,15 +108,15 @@ const StatusUpdateDialog = ({ open, onClose, onSubmit, currentStatus }) => {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>更新钻石状态</DialogTitle>
+      <DialogTitle>Update diamond status</DialogTitle>
       <DialogContent>
         <Stack spacing={3} sx={{ mt: 2 }}>
           <FormControl fullWidth>
-            <InputLabel>选择新状态</InputLabel>
+            <InputLabel>Select new state</InputLabel>
             <Select
               value={status}
               onChange={(e) => setStatus(e.target.value)}
-              label="选择新状态"
+              label="Select new state"
             >
               {statusOptions.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
@@ -132,19 +132,19 @@ const StatusUpdateDialog = ({ open, onClose, onSubmit, currentStatus }) => {
             fullWidth
             multiline
             rows={4}
-            label="备注信息"
+            label="Note Information"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
           />
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>取消</Button>
+        <Button onClick={onClose}>cancel</Button>
         <GradientButton 
           onClick={() => onSubmit(status, notes)}
           disabled={!status}
         >
-          提交更新
+          Committing updates
         </GradientButton>
       </DialogActions>
     </Dialog>
@@ -173,9 +173,9 @@ const LifecycleTrack = () => {
           certificateNo: "GIA2196152152"
         },
         history: [
-          { date: "2024-01-01", event: "开采完成", status: 'mining', notes: "南非金伯利矿区" },
-          { date: "2024-01-10", event: "切割打磨完成", status: 'cutting', notes: "安特卫普切割中心完成加工" },
-          { date: "2024-01-15", event: "激光雕刻完成", status: 'quality_control', notes: "GIA认证完成" }
+          { date: "2024-01-01", event: "Mining completion", status: 'mining', notes: "南非金伯利矿区" },
+          { date: "2024-01-10", event: "Finished cutting and grinding", status: 'cutting', notes: "安特卫普切割中心完成加工" },
+          { date: "2024-01-15", event: "Laser engraving completed", status: 'quality_control', notes: "GIA认证完成" }
         ]
       
       });
@@ -183,10 +183,10 @@ const LifecycleTrack = () => {
   };
 
   const handleStatusUpdate = async (newStatus, notes) => {
-    // 这里将来会调用智能合约更新状态
+    // In the future, this will call a smart contract to update the status.
     console.log('Updating status:', { diamondId: searchId, newStatus, notes });
     
-    // 模拟更新
+    // Simulation update
     const newEvent = {
       date: new Date().toISOString().split('T')[0],
       event: statusOptions.find(opt => opt.value === newStatus)?.label || newStatus,
@@ -271,7 +271,7 @@ const LifecycleTrack = () => {
               justifyContent: 'space-between',
               alignItems: 'center'
             }}>
-              {/* 左侧标题部分 */}
+              {/* Left heading section */}
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <VerifiedIcon sx={{ color: '#89CFF0', fontSize: 30 }} />
                 <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#1a237e' }}>
@@ -279,7 +279,7 @@ const LifecycleTrack = () => {
                 </Typography>
               </Box>
               
-              {/* 右侧按钮部分 */}
+              {/* The right button section */}
               <GradientButton
                 startIcon={<AddIcon />}
                 onClick={() => setOpenUpdateDialog(true)}
@@ -288,7 +288,7 @@ const LifecycleTrack = () => {
               </GradientButton>
             </Box>
 
-            {/* 时间线 */}
+            {/* timeline */}
             <Divider sx={{ borderColor: 'rgba(137, 207, 240, 0.2)' }} />
 
                       

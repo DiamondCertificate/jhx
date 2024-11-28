@@ -1,4 +1,4 @@
-// 美化版的生命周期追踪页面
+// A prettier version of the lifecycle tracking page
 import {
   Container,
   Paper,
