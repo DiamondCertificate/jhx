@@ -173,9 +173,9 @@ const LifecycleTrack = () => {
           certificateNo: "GIA2196152152"
         },
         history: [
-          { date: "2024-01-01", event: "Mining completion", status: 'mining', notes: "南非金伯利矿区" },
-          { date: "2024-01-10", event: "Finished cutting and grinding", status: 'cutting', notes: "安特卫普切割中心完成加工" },
-          { date: "2024-01-15", event: "Laser engraving completed", status: 'quality_control', notes: "GIA认证完成" }
+          { date: "2024-01-01", event: "Mining completion", status: 'mining', notes: "Kimberley mining area in South Africa" },
+          { date: "2024-01-10", event: "Finished cutting and grinding", status: 'cutting', notes: "Antwerp cutting center" },
+          { date: "2024-01-15", event: "Laser engraving completed", status: 'quality_control', notes: "GIA certification completed" }
         ]
       
       });

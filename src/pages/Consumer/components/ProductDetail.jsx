@@ -176,9 +176,9 @@ const ProductDetail = () => {
     description: 'A meticulously crafted heart-shaped diamond necklace, dazzling and radiant',
     price: 99999,
     images: [
-      'https://example.com/image1.jpg',
-      'https://example.com/image2.jpg',
-      'https://example.com/image3.jpg',
+      '/public/IMG139.jpg',
+      '/public/IMG139.jpg',
+      '/public/IMG139.jpg',
     ],
     certificate: {
       id: 'GIA2196152152',
