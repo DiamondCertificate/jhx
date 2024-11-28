@@ -20,7 +20,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 //import TimelineIcon from '@mui/icons-material/Timeline';
 import SearchIcon from '@mui/icons-material/Search';
 
-// 自定义样式组件
+// Custom Style Component
 const GlassContainer = styled(Paper)(({ theme }) => ({
   background: 'rgba(255, 255, 255, 0.25)',
   backdropFilter: 'blur(10px)',

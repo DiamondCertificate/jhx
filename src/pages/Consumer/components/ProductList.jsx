@@ -33,18 +33,18 @@ const ProductList = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('recommended');
 
-  // 模拟商品数据
+  // Simulating commodity data
   const products = [
     {
       id: '1',
-      name: '璀璨之心钻石项链',
-      description: '1克拉 D色 VVS1净度 完美切工',
+      name: 'heart-shaped diamond necklace',
+      description: '1 carat D color VVS1 clarity perfect cut',
       price: 99999,
       imageUrl: 'https://example.com/image1.jpg',
       certificateId: 'GIA2196152152',
       contractAddress: '0x123...abc'
     },
-    // 添加更多商品...
+    // Add more items...
   ];
 
   const handleProductClick = (productId) => {
@@ -64,11 +64,11 @@ const ProductList = () => {
           WebkitTextFillColor: 'transparent',
         }}
       >
-        精选珠宝
+        Selected jewelry
       </Typography>
 
       <Stack spacing={4}>
-        {/* 搜索和排序区域 */}
+        {/* Search and Sorting Area */}
         <Stack 
           direction={{ xs: 'column', md: 'row' }} 
           spacing={2}
@@ -77,7 +77,7 @@ const ProductList = () => {
           <TextField
             fullWidth
             variant="outlined"
-            placeholder="搜索珠宝..."
+            placeholder="Searching for jewelry..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             InputProps={{
@@ -96,25 +96,25 @@ const ProductList = () => {
             }}
           />
           <FormControl sx={{ flex: { md: 1 } }}>
-            <InputLabel>排序方式</InputLabel>
+            <InputLabel>sortord</InputLabel>
             <Select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              label="排序方式"
+              label="sortord"
               sx={{
                 background: 'rgba(255, 255, 255, 0.1)',
                 borderRadius: 2,
               }}
             >
-              <MenuItem value="recommended">推荐</MenuItem>
-              <MenuItem value="price_asc">价格从低到高</MenuItem>
-              <MenuItem value="price_desc">价格从高到低</MenuItem>
-              <MenuItem value="newest">最新上架</MenuItem>
+              <MenuItem value="recommended">Recommend </MenuItem>
+              <MenuItem value="price_asc">Prices range from low to high</MenuItem>
+              <MenuItem value="price_desc">Prices go from high to low</MenuItem>
+              <MenuItem value="newest">New </MenuItem>
             </Select>
           </FormControl>
         </Stack>
 
-        {/* 商品列表区域 */}
+        {/* Product list area */}
         <Box sx={{ 
           display: 'flex', 
           flexWrap: 'wrap', 

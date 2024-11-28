@@ -78,11 +78,11 @@ const ProductDetail = () => {
   const [error, setError] = useState('');
   const [walletConnected, setWalletConnected] = useState(false);
 
-  // 连接 MetaMask
+  // Connect MetaMask
   const connectWallet = async () => {
     try {
       if (!window.ethereum) {
-        setError('请先安装 MetaMask 钱包');
+        setError('Please install the MetaMask wallet first');
         return;
       }
 
@@ -95,7 +95,7 @@ const ProductDetail = () => {
         handlePurchase();
       }
     } catch (err) {
-      setError('连接钱包失败：' + err.message);
+      setError('Wallet connection failure：' + err.message);
     }
   };
 
@@ -116,14 +116,14 @@ const ProductDetail = () => {
     }
   ];
 
-  // 处理购买
+  // Processing purchases
   const handlePurchase = async () => {
     try {
       setIsPurchasing(true);
       setError('');
 
       if (!window.ethereum) {
-        throw new Error('请安装 MetaMask 钱包');
+        throw new Error('Please install the MetaMask wallet');
       }
   
       const accounts = await window.ethereum.request({
@@ -131,27 +131,27 @@ const ProductDetail = () => {
       });
   
       if (!accounts || accounts.length === 0) {
-        throw new Error('请先连接 MetaMask 钱包');
+        throw new Error('Please connect the MetaMask wallet first');
       }
   
       const account = accounts[0];
       const web3 = new Web3(window.ethereum);
   
-      // 创建合约实例
-    const contract = new web3.eth.Contract(CONTRACT_ABI, contractAddress);
+      // Create a contract instance
+    const contract = new web3.eth.Contract(CONTRACT_ABI, product.contractAddress);
     
-    // 编码合约调用
+    // Coded contract call
     const data = contract.methods.purchaseJewelry(product.id).encodeABI();
 
-    // 构造交易参数
+    // Construct trading parameters
     const transactionParameters = {
-      to: contractAddress,
+      to: product.contractAddress,
       from: account,
       value: web3.utils.toHex(web3.utils.toWei(product.price.toString(), 'ether')),
       data: data
     };
 
-    // 发送交易
+    // Send transaction
     const txHash = await window.ethereum.request({
       method: 'eth_sendTransaction',
       params: [transactionParameters],
@@ -163,17 +163,17 @@ const ProductDetail = () => {
 
   } catch (err) {
     console.error('Purchase error:', err);
-    setError('购买失败：' + (err.message || '未知错误'));
+    setError('Purchase failure：' + (err.message || 'unknown error'));
   } finally {
     setIsPurchasing(false);
   }
 };
   
-  // 模拟商品数据
+  // Simulated commodity data
   const product = {
     id,
-    name: '璀璨之心钻石项链',
-    description: '精心打造的心形钻石项链，璀璨夺目',
+    name: 'Brilliant Heart Diamond necklace',
+    description: 'A meticulously crafted heart-shaped diamond necklace, dazzling and radiant',
     price: 99999,
     images: [
       'https://example.com/image1.jpg',
@@ -190,19 +190,19 @@ const ProductDetail = () => {
     },
     contractAddress: '0x123...abc',
     specifications: [
-      { label: '钻石重量', value: '1.00克拉' },
-      { label: '颜色', value: 'D色' },
-      { label: '净度', value: 'VVS1' },
-      { label: '切工', value: 'Excellent' },
-      { label: '材质', value: '18K白金' },
-      { label: '链长', value: '45cm' }
+      { label: 'Weight of diamond', value: '1.00carat' },
+      { label: 'color', value: 'D' },
+      { label: 'Clarity', value: 'VVS1' },
+      { label: 'Cut', value: 'Excellent' },
+      { label: 'Texture', value: '18Kplatinum' },
+      { label: 'chain length', value: '45cm' }
     ]
   };
 
   return (
     <StyledContainer maxWidth="lg">
       <Stack direction={{ xs: 'column', md: 'row' }} spacing={4}>
-        {/* 左侧图片展示 */}
+         {/* Left picture display */}
         <Box sx={{ flex: { md: 7 } }}>
           <Fade in timeout={500}>
             <ImageContainer>
@@ -234,7 +234,7 @@ const ProductDetail = () => {
           </Fade>
         </Box>
 
-        {/* 右侧信息展示 */}
+         {/* Right information display*/}
         <Box sx={{ flex: { md: 5 } }}>
           <Zoom in timeout={500}>
             <Stack spacing={3}>
@@ -257,14 +257,14 @@ const ProductDetail = () => {
                 {product.description}
               </Typography>
 
-              {/* 添加购买按钮 */}
+               {/* Add purchase button. */}
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <GradientButton
                   startIcon={<AccountBalanceWalletIcon />}
                   onClick={() => setIsDialogOpen(true)}
                   size="large"
                 >
-                  立即购买
+                   Buy Now
                 </GradientButton>
               </Box>
 
@@ -274,19 +274,19 @@ const ProductDetail = () => {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                       <VerifiedIcon sx={{ color: '#89CFF0' }} />
                       <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-                        证书信息
+                       Certificate Information 
                       </Typography>
                     </Box>
                     <Divider />
                     {Object.entries(product.certificate).map(([key, value]) => (
                       <Box key={key} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Typography color="text.secondary">
-                          {key === 'id' ? '证书编号' :
-                           key === 'weight' ? '重量' :
-                           key === 'color' ? '颜色' :
-                           key === 'clarity' ? '净度' :
-                           key === 'cut' ? '切工' :
-                           key === 'issueDate' ? '发证日期' : key}
+                          {key === 'id' ? 'Certificate ID' :
+                           key === 'weight' ? 'Weight' :
+                           key === 'color' ? 'Color' :
+                           key === 'clarity' ? 'Clarity' :
+                           key === 'cut' ? 'Cut' :
+                           key === 'issueDate' ? 'IssueDate' : key}
                         </Typography>
                         <Typography sx={{ fontWeight: 'bold' }}>{value}</Typography>
                       </Box>
@@ -298,7 +298,7 @@ const ProductDetail = () => {
                       sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
                     >
                       <LaunchIcon sx={{ fontSize: 16 }} />
-                      查看链上信息
+                       View on-chain information
                     </Link>
                   </Stack>
                 </CardContent>
@@ -307,7 +307,7 @@ const ProductDetail = () => {
               <GlassCard>
                 <CardContent>
                   <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 2 }}>
-                    商品规格
+                   specification of goods
                   </Typography>
                   <Box sx={{ 
                     display: 'flex', 
@@ -338,21 +338,21 @@ const ProductDetail = () => {
         </Box>
       </Stack>
 
-      {/* 购买确认对话框 */}
+       {/* Purchase Confirmation Dialog Box */}
       <Dialog open={isDialogOpen} onClose={() => !isPurchasing && setIsDialogOpen(false)}>
         <DialogTitle>
-          确认购买
+         Confirm purchase
         </DialogTitle>
         <DialogContent>
           <Stack spacing={2}>
             <Typography>
-              商品：{product.name}
+             commodity：{product.name}
             </Typography>
             <Typography>
-              价格：¥ {product.price.toLocaleString()}
+             price：¥ {product.price.toLocaleString()}
             </Typography>
             <Typography color="text.secondary" variant="body2">
-              点击确认后将通过 MetaMask 进行支付
+             Payment will be made via MetaMask after clicking on the confirmation
             </Typography>
           </Stack>
         </DialogContent>
@@ -361,19 +361,19 @@ const ProductDetail = () => {
             onClick={() => setIsDialogOpen(false)} 
             disabled={isPurchasing}
           >
-            取消
+            cancel
           </Button>
           <GradientButton
             onClick={connectWallet}
             disabled={isPurchasing}
             startIcon={isPurchasing ? <CircularProgress size={20} /> : <AccountBalanceWalletIcon />}
           >
-            {isPurchasing ? '交易处理中...' : '确认购买'}
+            {isPurchasing ? 'Transaction processing...' : 'Confirm purchase'}
           </GradientButton>
         </DialogActions>
       </Dialog>
 
-      {/* 错误提示 */}
+       {/* ERROR WRITING INITBPS */}
       <Snackbar 
         open={!!error} 
         autoHideDuration={6000} 
@@ -384,14 +384,14 @@ const ProductDetail = () => {
         </Alert>
       </Snackbar>
 
-      {/* 购买成功提示 */}
+       {/* Successful Purchase Notification*/}
       <Snackbar 
         open={purchaseSuccess} 
         autoHideDuration={6000} 
         onClose={() => setPurchaseSuccess(false)}
       >
         <Alert severity="success" onClose={() => setPurchaseSuccess(false)}>
-          购买成功！您已拥有该钻石证书
+         Successful purchase! You already have the diamond certificate
         </Alert>
       </Snackbar>
     </StyledContainer>

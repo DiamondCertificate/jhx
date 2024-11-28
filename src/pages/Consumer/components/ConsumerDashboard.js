@@ -25,7 +25,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import { useNavigate } from 'react-router-dom';
 
-// 自定义样式组件
+// Custom style components
 const GlassContainer = styled(Paper)(({ theme }) => ({
   background: 'rgba(255, 255, 255, 0.25)',
   backdropFilter: 'blur(10px)',
@@ -98,20 +98,20 @@ const ConsumerDashboard = () => {
   const features = [
     {
       icon: <ShoppingBagIcon sx={{ fontSize: 40, color: 'white' }} />,
-      title: "购买珠宝",
-      description: "浏览和购买认证珠宝",
+      title: "Purchase Jewelry",
+      description: "Browse and purchase certified jewelry",
       path: "/consumer/products"
     },
     {
       icon: <SearchIcon sx={{ fontSize: 40, color: 'white' }} />,
-      title: "验证真实性",
-      description: "验证钻石证书的真实性",
+      title: "Verify authenticity",
+      description: "Verify the authenticity of the diamond certificate",
       path: "/consumer/verify"
     },
     {
       icon: <DiamondIcon sx={{ fontSize: 40, color: 'white' }} />,
-      title: "我的证书",
-      description: "查看我的钻石证书",
+      title: "My Certificates",
+      description: "Check my diamond certificate",
       path: "/consumer/certificates"
     }
   ];

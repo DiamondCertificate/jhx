@@ -36,7 +36,7 @@ const ProductCard = ({ product, onClick }) => {
         />
         <CertifiedBadge
           icon={<VerifiedIcon />}
-          label="已认证"
+          label="certified"
         />
       </Box>
       <CardContent>

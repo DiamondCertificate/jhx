@@ -22,7 +22,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import { useNavigate } from 'react-router-dom';
 
-// 自定义样式组件
+// Custom style components
 const GlassContainer = styled(Paper)(({ theme }) => ({
   background: 'rgba(255, 255, 255, 0.25)',
   backdropFilter: 'blur(10px)',
