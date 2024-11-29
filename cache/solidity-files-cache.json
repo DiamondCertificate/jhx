@@ -1,0 +1,306 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/zifanhui/jhx-2/contracts/1.MiningCompany.sol": {
+      "lastModificationDate": 1732903841792,
+      "contentHash": "87c42612b3e70222f0299e5d483a2a24",
+      "sourceName": "contracts/1.MiningCompany.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IDiamondTraceabilityNFT.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "MiningCompany"
+      ]
+    },
+    "/Users/zifanhui/jhx-2/contracts/IDiamondTraceabilityNFT.sol": {
+      "lastModificationDate": 1732903841814,
+      "contentHash": "6f183d75ba5ced850f4eef886d51ed7f",
+      "sourceName": "contracts/IDiamondTraceabilityNFT.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "IDiamondTraceabilityNFT"
+      ]
+    },
+    "/Users/zifanhui/jhx-2/contracts/DiamondTraceabilityNFT.sol": {
+      "lastModificationDate": 1732903856882,
+      "contentHash": "9b1e151ae30b5e27b24aae1237b4f141",
+      "sourceName": "contracts/DiamondTraceabilityNFT.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IDiamondTraceabilityNFT.sol",
+        "./AccessControl.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "DiamondTraceabilityNFT"
+      ]
+    },
+    "/Users/zifanhui/jhx-2/contracts/AccessControl.sol": {
+      "lastModificationDate": 1732903856878,
+      "contentHash": "27fdc53252136015d375531e8201536d",
+      "sourceName": "contracts/AccessControl.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "AccessControl"
+      ]
+    },
+    "/Users/zifanhui/jhx-2/contracts/5.jseller.sol": {
+      "lastModificationDate": 1732903841805,
+      "contentHash": "43bfb70321282fd8437f9646faec16f3",
+      "sourceName": "contracts/5.jseller.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IDiamondTraceabilityNFT.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "JewelrySeller"
+      ]
+    },
+    "/Users/zifanhui/jhx-2/contracts/4.jmaker.sol": {
+      "lastModificationDate": 1732903841802,
+      "contentHash": "58ffe7611f77f3f43d572981064ba07e",
+      "sourceName": "contracts/4.jmaker.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IDiamondTraceabilityNFT.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "JewelryMaker"
+      ]
+    },
+    "/Users/zifanhui/jhx-2/contracts/3.grading.sol": {
+      "lastModificationDate": 1732903841799,
+      "contentHash": "9c421e910fed1386e061c66c0e294b3c",
+      "sourceName": "contracts/3.grading.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IDiamondTraceabilityNFT.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "GradingLab"
+      ]
+    },
+    "/Users/zifanhui/jhx-2/contracts/2.cut.sol": {
+      "lastModificationDate": 1732903841796,
+      "contentHash": "b2156004aa8b414be8603000eea43099",
+      "sourceName": "contracts/2.cut.sol",
+      "solcConfig": {
+        "version": "0.8.20",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "evmVersion": "paris",
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IDiamondTraceabilityNFT.sol"
+      ],
+      "versionPragmas": [
+        "^0.8.20"
+      ],
+      "artifacts": [
+        "CuttingCompany"
+      ]
+    }
+  }
+}

@@ -1,0 +1,195 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_traceabilityNFTAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "outsidepwd",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					}
+				],
+				"name": "issueDiamondCertificate",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "outsidepwd",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					}
+				],
+				"name": "sellDiamond",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "outsidepwd",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					}
+				],
+				"name": "setDiamondForSale",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "traceabilityNFT",
+				"outputs": [
+					{
+						"internalType": "contract IDiamondTraceabilityNFT",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "outsidepwd",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "newPrice",
+						"type": "uint256"
+					}
+				],
+				"name": "updateDiamondPrice",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"try1/5.jseller.sol": "JewelrySeller"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"try1/5.jseller.sol": {
+			"keccak256": "0x85d08f46e2e864dc8a6e8d7192fd6ec725c3be0de87821a94f1304ff4cec185b",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9655b71350f4ef4e95a56efff8e4ef91584fbb92b69a73c8a6c101b2b94f16c0",
+				"dweb:/ipfs/QmeWiqadsfwjzSkMExSggddZTcq9o3dYXDPTKVCiq9mZRq"
+			]
+		},
+		"try1/IDiamondTraceabilityNFT.sol": {
+			"keccak256": "0x8c1709e03ccccce7c6284274888494e8a685058f2a154657aa4e70746c1ddfdc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://aea9419b720f6eb8e5cffe00a9886c13d67f28ba44a145520ff8d50fff39f80f",
+				"dweb:/ipfs/QmS92BLXXvgSeUKZJDmHyLKgiX6gQnikMnqueM8RAp58h2"
+			]
+		}
+	},
+	"version": 1
+}

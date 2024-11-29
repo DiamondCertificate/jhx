@@ -1,0 +1,178 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_traceabilityNFTAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "outsidepwd",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "caratWeight",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "origin",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "color",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "clarity",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "nextHolder",
+						"type": "address"
+					}
+				],
+				"name": "mineDiamond",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "traceabilityNFT",
+				"outputs": [
+					{
+						"internalType": "contract IDiamondTraceabilityNFT",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"mineDiamond(uint256,uint256,string,string,string,address)": {
+					"notice": "挖矿功能：仅允许当前合约所有者调用"
+				},
+				"transferOwnership(address)": {
+					"notice": "转移合约所有权"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"try1/1.MiningCompany.sol": "MiningCompany"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"try1/1.MiningCompany.sol": {
+			"keccak256": "0xc7d80a8afe038c5e979a87fb3d15a6bffe49084f19e45f3f30dd7407f18cc8bb",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://57d009bbfb2f1e82237fd467690d3ea2ec0db1afb0a3477acbbbf597df134341",
+				"dweb:/ipfs/QmRE8kdTWacWn7ZaozQykBAZEYPCfDH518UWCLnQqAmGGe"
+			]
+		},
+		"try1/IDiamondTraceabilityNFT.sol": {
+			"keccak256": "0x8c1709e03ccccce7c6284274888494e8a685058f2a154657aa4e70746c1ddfdc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://aea9419b720f6eb8e5cffe00a9886c13d67f28ba44a145520ff8d50fff39f80f",
+				"dweb:/ipfs/QmS92BLXXvgSeUKZJDmHyLKgiX6gQnikMnqueM8RAp58h2"
+			]
+		}
+	},
+	"version": 1
+}

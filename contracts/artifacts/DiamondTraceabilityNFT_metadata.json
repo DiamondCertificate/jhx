@@ -1,0 +1,633 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "accessControlAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "issuedBy",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "bytes32",
+						"name": "certificateId",
+						"type": "bytes32"
+					}
+				],
+				"name": "CertificateIssued",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "minedBy",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "caratWeight",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "origin",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "color",
+						"type": "string"
+					},
+					{
+						"indexed": false,
+						"internalType": "string",
+						"name": "clarity",
+						"type": "string"
+					}
+				],
+				"name": "DiamondMined",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					}
+				],
+				"name": "DiamondSold",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					}
+				],
+				"name": "PriceUpdated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					}
+				],
+				"name": "TransactionCancelled",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "accessControl",
+				"outputs": [
+					{
+						"internalType": "contract AccessControl",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					}
+				],
+				"name": "buyDiamond",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					}
+				],
+				"name": "cancelTransaction",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					}
+				],
+				"name": "getDiamondCertificate",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "uniqueId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "gradingReport",
+								"type": "string"
+							},
+							{
+								"internalType": "address",
+								"name": "issuedBy",
+								"type": "address"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "certificateId",
+								"type": "bytes32"
+							}
+						],
+						"internalType": "struct IDiamondTraceabilityNFT.DiamondCertificate",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					}
+				],
+				"name": "getDiamondDetails",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "uniqueId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "caratWeight",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "origin",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "color",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "clarity",
+								"type": "string"
+							},
+							{
+								"internalType": "enum IDiamondTraceabilityNFT.DiamondStatus",
+								"name": "status",
+								"type": "uint8"
+							},
+							{
+								"internalType": "address",
+								"name": "currentHolder",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "price",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct IDiamondTraceabilityNFT.DiamondDetails",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					}
+				],
+				"name": "getDiamondLifecycle",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "string",
+								"name": "operationName",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "remarks",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "date",
+								"type": "string"
+							}
+						],
+						"internalType": "struct DiamondTraceabilityNFT.DiamondOperation[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					}
+				],
+				"name": "getDiamondPrice",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "manufacturer",
+						"type": "string"
+					}
+				],
+				"name": "issueCertificate",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "uint256",
+								"name": "uniqueId",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "caratWeight",
+								"type": "uint256"
+							},
+							{
+								"internalType": "string",
+								"name": "color",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "clarity",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "cut",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "origin",
+								"type": "string"
+							},
+							{
+								"internalType": "string",
+								"name": "manufacturer",
+								"type": "string"
+							},
+							{
+								"internalType": "bytes32",
+								"name": "certificateId",
+								"type": "bytes32"
+							}
+						],
+						"internalType": "struct IDiamondTraceabilityNFT.ExtendedDiamondCertificate",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "caratWeight",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "origin",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "color",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "clarity",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "nextHolder",
+						"type": "address"
+					}
+				],
+				"name": "mineDiamond",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					}
+				],
+				"name": "sellDiamond",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					}
+				],
+				"name": "setForSale",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum IDiamondTraceabilityNFT.DiamondStatus",
+						"name": "newStatus",
+						"type": "uint8"
+					},
+					{
+						"internalType": "address",
+						"name": "newHolder",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "operationName",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "remarks",
+						"type": "string"
+					}
+				],
+				"name": "updateDiamondStatus",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "price",
+						"type": "uint256"
+					}
+				],
+				"name": "updatePrice",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					}
+				],
+				"name": "verifyOwnership",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "buyer",
+						"type": "address"
+					}
+				],
+				"name": "verifyPurchase",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"try1/DiamondTraceabilityNFT.sol": "DiamondTraceabilityNFT"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"try1/AccessControl.sol": {
+			"keccak256": "0xfc89cc55e985a9c4e1c3305083d4b720e9e6d256d9f7d2b2da9088195f4010d8",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://17adecce48236d762d2f91a70b5a52c2686dd562362faa3a4d9dadb4498a7ea0",
+				"dweb:/ipfs/QmVrjrsC4vVtEwRkEk8qvrC6yeQcwB8FLAigLWgHozSH5e"
+			]
+		},
+		"try1/DiamondTraceabilityNFT.sol": {
+			"keccak256": "0xf1665019a355bd2f9a9fa307097bc2b5b2be9739f96cc85972443ab25ad69bf4",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://da4be86ccf9c87495f0e7e251b15cdf7b078d97275841589fa2e1a098ec31a37",
+				"dweb:/ipfs/QmbsfmaEgTE6R6aToVJP8YV1oEJvAqWfZhh9meKeHHAjdh"
+			]
+		},
+		"try1/IDiamondTraceabilityNFT.sol": {
+			"keccak256": "0xcdf5fce2b6562f951771896da266c6889393d6b65cf0e70da984f3edc3d02289",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://f2973ccc3d8b9cf48ad5c4b2644735493214cc89ec0c7fb12176dfe7ca8497d6",
+				"dweb:/ipfs/QmfXrG38UUnQvYGb6FMCSx33kdyxKmQMpRt4MUcWgk7qdT"
+			]
+		}
+	},
+	"version": 1
+}

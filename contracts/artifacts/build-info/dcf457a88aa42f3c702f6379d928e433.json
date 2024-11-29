@@ -1,0 +1,2002 @@
+{
+	"id": "dcf457a88aa42f3c702f6379d928e433",
+	"_format": "hh-sol-build-info-1",
+	"solcVersion": "0.8.26",
+	"solcLongVersion": "0.8.26+commit.8a97fa7a",
+	"input": {
+		"language": "Solidity",
+		"sources": {
+			"try1/IDiamondTraceabilityNFT.sol": {
+				"content": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.20;\r\n\r\ninterface IDiamondTraceabilityNFT {\r\n    // 钻石状态枚举\r\n    enum DiamondStatus {\r\n        Mined,\r\n        Cut,\r\n        Graded,\r\n        Manufactured,\r\n        ForSale,\r\n        Sold\r\n    }\r\n    struct ExtendedDiamondCertificate {\r\n        uint256 uniqueId;\r\n        uint256 caratWeight;\r\n        string color;\r\n        string clarity;\r\n        string cut;\r\n        string origin;\r\n        string manufacturer;\r\n        bytes32 certificateId;\r\n    } \r\n    // 钻石详细信息结构体\r\n    struct DiamondDetails {\r\n        uint256 uniqueId;\r\n        uint256 caratWeight;\r\n        string origin;\r\n        string color;\r\n        string clarity;\r\n        DiamondStatus status;\r\n        address currentHolder;\r\n        uint256 price;\r\n    }\r\n\r\n    // 钻石证书结构体\r\n    struct DiamondCertificate {\r\n        uint256 uniqueId;\r\n        string gradingReport;\r\n        address issuedBy;\r\n        bytes32 certificateId;\r\n    }\r\n\r\n    // 挖掘钻石函数\r\n    function mineDiamond(\r\n        uint256 caratWeight,\r\n        string memory origin,\r\n        string memory color,\r\n        string memory clarity,\r\n        address nextHolder\r\n    ) external returns (uint256);\r\n\r\n    // 更新钻石状态函数（更新后的签名）\r\n    function updateDiamondStatus(\r\n        uint256 uniqueId,\r\n        DiamondStatus newStatus,\r\n        address newHolder,\r\n        string memory operationName,\r\n        string memory remarks\r\n    ) external;\r\n\r\n    function issueCertificate(\r\n        uint256 uniqueId, \r\n        string memory manufacturer\r\n    ) external returns (ExtendedDiamondCertificate memory);\r\n\r\n    // 获取钻石详细信息\r\n    function getDiamondDetails(uint256 uniqueId) external view returns (DiamondDetails memory);\r\n\r\n    // 获取钻石证书\r\n    function getDiamondCertificate(uint256 uniqueId) external view returns (DiamondCertificate memory);\r\n\r\n    // 设置出售\r\n    function setForSale(uint256 uniqueId, uint256 price) external;\r\n\r\n    function sellDiamond(uint256 uniqueId, address buyer) external ;\r\n    function updatePrice(uint256 uniqueId, uint256 price) external ;\r\n\r\n    // 额外添加的扩展证书结构体\r\n\r\n}"
+			}
+		},
+		"settings": {
+			"optimizer": {
+				"enabled": false,
+				"runs": 200
+			},
+			"outputSelection": {
+				"*": {
+					"": [
+						"ast"
+					],
+					"*": [
+						"abi",
+						"metadata",
+						"devdoc",
+						"userdoc",
+						"storageLayout",
+						"evm.legacyAssembly",
+						"evm.bytecode",
+						"evm.deployedBytecode",
+						"evm.methodIdentifiers",
+						"evm.gasEstimates",
+						"evm.assembly"
+					]
+				}
+			},
+			"remappings": []
+		}
+	},
+	"output": {
+		"contracts": {
+			"try1/IDiamondTraceabilityNFT.sol": {
+				"IDiamondTraceabilityNFT": {
+					"abi": [
+						{
+							"inputs": [
+								{
+									"internalType": "uint256",
+									"name": "uniqueId",
+									"type": "uint256"
+								}
+							],
+							"name": "getDiamondCertificate",
+							"outputs": [
+								{
+									"components": [
+										{
+											"internalType": "uint256",
+											"name": "uniqueId",
+											"type": "uint256"
+										},
+										{
+											"internalType": "string",
+											"name": "gradingReport",
+											"type": "string"
+										},
+										{
+											"internalType": "address",
+											"name": "issuedBy",
+											"type": "address"
+										},
+										{
+											"internalType": "bytes32",
+											"name": "certificateId",
+											"type": "bytes32"
+										}
+									],
+									"internalType": "struct IDiamondTraceabilityNFT.DiamondCertificate",
+									"name": "",
+									"type": "tuple"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "uint256",
+									"name": "uniqueId",
+									"type": "uint256"
+								}
+							],
+							"name": "getDiamondDetails",
+							"outputs": [
+								{
+									"components": [
+										{
+											"internalType": "uint256",
+											"name": "uniqueId",
+											"type": "uint256"
+										},
+										{
+											"internalType": "uint256",
+											"name": "caratWeight",
+											"type": "uint256"
+										},
+										{
+											"internalType": "string",
+											"name": "origin",
+											"type": "string"
+										},
+										{
+											"internalType": "string",
+											"name": "color",
+											"type": "string"
+										},
+										{
+											"internalType": "string",
+											"name": "clarity",
+											"type": "string"
+										},
+										{
+											"internalType": "enum IDiamondTraceabilityNFT.DiamondStatus",
+											"name": "status",
+											"type": "uint8"
+										},
+										{
+											"internalType": "address",
+											"name": "currentHolder",
+											"type": "address"
+										},
+										{
+											"internalType": "uint256",
+											"name": "price",
+											"type": "uint256"
+										}
+									],
+									"internalType": "struct IDiamondTraceabilityNFT.DiamondDetails",
+									"name": "",
+									"type": "tuple"
+								}
+							],
+							"stateMutability": "view",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "uint256",
+									"name": "uniqueId",
+									"type": "uint256"
+								},
+								{
+									"internalType": "string",
+									"name": "manufacturer",
+									"type": "string"
+								}
+							],
+							"name": "issueCertificate",
+							"outputs": [
+								{
+									"components": [
+										{
+											"internalType": "uint256",
+											"name": "uniqueId",
+											"type": "uint256"
+										},
+										{
+											"internalType": "uint256",
+											"name": "caratWeight",
+											"type": "uint256"
+										},
+										{
+											"internalType": "string",
+											"name": "color",
+											"type": "string"
+										},
+										{
+											"internalType": "string",
+											"name": "clarity",
+											"type": "string"
+										},
+										{
+											"internalType": "string",
+											"name": "cut",
+											"type": "string"
+										},
+										{
+											"internalType": "string",
+											"name": "origin",
+											"type": "string"
+										},
+										{
+											"internalType": "string",
+											"name": "manufacturer",
+											"type": "string"
+										},
+										{
+											"internalType": "bytes32",
+											"name": "certificateId",
+											"type": "bytes32"
+										}
+									],
+									"internalType": "struct IDiamondTraceabilityNFT.ExtendedDiamondCertificate",
+									"name": "",
+									"type": "tuple"
+								}
+							],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "uint256",
+									"name": "caratWeight",
+									"type": "uint256"
+								},
+								{
+									"internalType": "string",
+									"name": "origin",
+									"type": "string"
+								},
+								{
+									"internalType": "string",
+									"name": "color",
+									"type": "string"
+								},
+								{
+									"internalType": "string",
+									"name": "clarity",
+									"type": "string"
+								},
+								{
+									"internalType": "address",
+									"name": "nextHolder",
+									"type": "address"
+								}
+							],
+							"name": "mineDiamond",
+							"outputs": [
+								{
+									"internalType": "uint256",
+									"name": "",
+									"type": "uint256"
+								}
+							],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "uint256",
+									"name": "uniqueId",
+									"type": "uint256"
+								},
+								{
+									"internalType": "address",
+									"name": "buyer",
+									"type": "address"
+								}
+							],
+							"name": "sellDiamond",
+							"outputs": [],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "uint256",
+									"name": "uniqueId",
+									"type": "uint256"
+								},
+								{
+									"internalType": "uint256",
+									"name": "price",
+									"type": "uint256"
+								}
+							],
+							"name": "setForSale",
+							"outputs": [],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "uint256",
+									"name": "uniqueId",
+									"type": "uint256"
+								},
+								{
+									"internalType": "enum IDiamondTraceabilityNFT.DiamondStatus",
+									"name": "newStatus",
+									"type": "uint8"
+								},
+								{
+									"internalType": "address",
+									"name": "newHolder",
+									"type": "address"
+								},
+								{
+									"internalType": "string",
+									"name": "operationName",
+									"type": "string"
+								},
+								{
+									"internalType": "string",
+									"name": "remarks",
+									"type": "string"
+								}
+							],
+							"name": "updateDiamondStatus",
+							"outputs": [],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						},
+						{
+							"inputs": [
+								{
+									"internalType": "uint256",
+									"name": "uniqueId",
+									"type": "uint256"
+								},
+								{
+									"internalType": "uint256",
+									"name": "price",
+									"type": "uint256"
+								}
+							],
+							"name": "updatePrice",
+							"outputs": [],
+							"stateMutability": "nonpayable",
+							"type": "function"
+						}
+					],
+					"devdoc": {
+						"kind": "dev",
+						"methods": {},
+						"version": 1
+					},
+					"evm": {
+						"assembly": "",
+						"bytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"deployedBytecode": {
+							"functionDebugData": {},
+							"generatedSources": [],
+							"immutableReferences": {},
+							"linkReferences": {},
+							"object": "",
+							"opcodes": "",
+							"sourceMap": ""
+						},
+						"gasEstimates": null,
+						"legacyAssembly": null,
+						"methodIdentifiers": {
+							"getDiamondCertificate(uint256)": "57d9a0b6",
+							"getDiamondDetails(uint256)": "0e065ccd",
+							"issueCertificate(uint256,string)": "0c816de4",
+							"mineDiamond(uint256,string,string,string,address)": "56b0a97d",
+							"sellDiamond(uint256,address)": "633bea15",
+							"setForSale(uint256,uint256)": "17fcfe22",
+							"updateDiamondStatus(uint256,uint8,address,string,string)": "81f740bd",
+							"updatePrice(uint256,uint256)": "82367b2d"
+						}
+					},
+					"metadata": "{\"compiler\":{\"version\":\"0.8.26+commit.8a97fa7a\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"uniqueId\",\"type\":\"uint256\"}],\"name\":\"getDiamondCertificate\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"uniqueId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"gradingReport\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"issuedBy\",\"type\":\"address\"},{\"internalType\":\"bytes32\",\"name\":\"certificateId\",\"type\":\"bytes32\"}],\"internalType\":\"struct IDiamondTraceabilityNFT.DiamondCertificate\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"uniqueId\",\"type\":\"uint256\"}],\"name\":\"getDiamondDetails\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"uniqueId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"caratWeight\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"origin\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"color\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"clarity\",\"type\":\"string\"},{\"internalType\":\"enum IDiamondTraceabilityNFT.DiamondStatus\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"currentHolder\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"}],\"internalType\":\"struct IDiamondTraceabilityNFT.DiamondDetails\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"uniqueId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"manufacturer\",\"type\":\"string\"}],\"name\":\"issueCertificate\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"uniqueId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"caratWeight\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"color\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"clarity\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"cut\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"origin\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"manufacturer\",\"type\":\"string\"},{\"internalType\":\"bytes32\",\"name\":\"certificateId\",\"type\":\"bytes32\"}],\"internalType\":\"struct IDiamondTraceabilityNFT.ExtendedDiamondCertificate\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"caratWeight\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"origin\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"color\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"clarity\",\"type\":\"string\"},{\"internalType\":\"address\",\"name\":\"nextHolder\",\"type\":\"address\"}],\"name\":\"mineDiamond\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"uniqueId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"buyer\",\"type\":\"address\"}],\"name\":\"sellDiamond\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"uniqueId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"}],\"name\":\"setForSale\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"uniqueId\",\"type\":\"uint256\"},{\"internalType\":\"enum IDiamondTraceabilityNFT.DiamondStatus\",\"name\":\"newStatus\",\"type\":\"uint8\"},{\"internalType\":\"address\",\"name\":\"newHolder\",\"type\":\"address\"},{\"internalType\":\"string\",\"name\":\"operationName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"remarks\",\"type\":\"string\"}],\"name\":\"updateDiamondStatus\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"uniqueId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"price\",\"type\":\"uint256\"}],\"name\":\"updatePrice\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"try1/IDiamondTraceabilityNFT.sol\":\"IDiamondTraceabilityNFT\"},\"evmVersion\":\"cancun\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"try1/IDiamondTraceabilityNFT.sol\":{\"keccak256\":\"0x7daa5eab39eea9238a85877c3ea911ccda1241b310907b539a4f079c2fc2610d\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://a5d850552560745bdd5868b744dcdd248af9c61bc5b42f79c22b17ad407146b4\",\"dweb:/ipfs/QmX1iDjXdXcAJT9ZzZTPjeRpai6TdJc1ZfQ7WMaD4URECr\"]}},\"version\":1}",
+					"storageLayout": {
+						"storage": [],
+						"types": null
+					},
+					"userdoc": {
+						"kind": "user",
+						"methods": {},
+						"version": 1
+					}
+				}
+			}
+		},
+		"sources": {
+			"try1/IDiamondTraceabilityNFT.sol": {
+				"ast": {
+					"absolutePath": "try1/IDiamondTraceabilityNFT.sol",
+					"exportedSymbols": {
+						"IDiamondTraceabilityNFT": [
+							129
+						]
+					},
+					"id": 130,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 1,
+							"literals": [
+								"solidity",
+								"^",
+								"0.8",
+								".20"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "33:24:0"
+						},
+						{
+							"abstract": false,
+							"baseContracts": [],
+							"canonicalName": "IDiamondTraceabilityNFT",
+							"contractDependencies": [],
+							"contractKind": "interface",
+							"fullyImplemented": false,
+							"id": 129,
+							"linearizedBaseContracts": [
+								129
+							],
+							"name": "IDiamondTraceabilityNFT",
+							"nameLocation": "71:23:0",
+							"nodeType": "ContractDefinition",
+							"nodes": [
+								{
+									"canonicalName": "IDiamondTraceabilityNFT.DiamondStatus",
+									"id": 8,
+									"members": [
+										{
+											"id": 2,
+											"name": "Mined",
+											"nameLocation": "159:5:0",
+											"nodeType": "EnumValue",
+											"src": "159:5:0"
+										},
+										{
+											"id": 3,
+											"name": "Cut",
+											"nameLocation": "175:3:0",
+											"nodeType": "EnumValue",
+											"src": "175:3:0"
+										},
+										{
+											"id": 4,
+											"name": "Graded",
+											"nameLocation": "189:6:0",
+											"nodeType": "EnumValue",
+											"src": "189:6:0"
+										},
+										{
+											"id": 5,
+											"name": "Manufactured",
+											"nameLocation": "206:12:0",
+											"nodeType": "EnumValue",
+											"src": "206:12:0"
+										},
+										{
+											"id": 6,
+											"name": "ForSale",
+											"nameLocation": "229:7:0",
+											"nodeType": "EnumValue",
+											"src": "229:7:0"
+										},
+										{
+											"id": 7,
+											"name": "Sold",
+											"nameLocation": "247:4:0",
+											"nodeType": "EnumValue",
+											"src": "247:4:0"
+										}
+									],
+									"name": "DiamondStatus",
+									"nameLocation": "134:13:0",
+									"nodeType": "EnumDefinition",
+									"src": "129:129:0"
+								},
+								{
+									"canonicalName": "IDiamondTraceabilityNFT.ExtendedDiamondCertificate",
+									"id": 25,
+									"members": [
+										{
+											"constant": false,
+											"id": 10,
+											"mutability": "mutable",
+											"name": "uniqueId",
+											"nameLocation": "317:8:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 25,
+											"src": "309:16:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_uint256",
+												"typeString": "uint256"
+											},
+											"typeName": {
+												"id": 9,
+												"name": "uint256",
+												"nodeType": "ElementaryTypeName",
+												"src": "309:7:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 12,
+											"mutability": "mutable",
+											"name": "caratWeight",
+											"nameLocation": "344:11:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 25,
+											"src": "336:19:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_uint256",
+												"typeString": "uint256"
+											},
+											"typeName": {
+												"id": 11,
+												"name": "uint256",
+												"nodeType": "ElementaryTypeName",
+												"src": "336:7:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 14,
+											"mutability": "mutable",
+											"name": "color",
+											"nameLocation": "373:5:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 25,
+											"src": "366:12:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_string_storage_ptr",
+												"typeString": "string"
+											},
+											"typeName": {
+												"id": 13,
+												"name": "string",
+												"nodeType": "ElementaryTypeName",
+												"src": "366:6:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_storage_ptr",
+													"typeString": "string"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 16,
+											"mutability": "mutable",
+											"name": "clarity",
+											"nameLocation": "396:7:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 25,
+											"src": "389:14:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_string_storage_ptr",
+												"typeString": "string"
+											},
+											"typeName": {
+												"id": 15,
+												"name": "string",
+												"nodeType": "ElementaryTypeName",
+												"src": "389:6:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_storage_ptr",
+													"typeString": "string"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 18,
+											"mutability": "mutable",
+											"name": "cut",
+											"nameLocation": "421:3:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 25,
+											"src": "414:10:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_string_storage_ptr",
+												"typeString": "string"
+											},
+											"typeName": {
+												"id": 17,
+												"name": "string",
+												"nodeType": "ElementaryTypeName",
+												"src": "414:6:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_storage_ptr",
+													"typeString": "string"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 20,
+											"mutability": "mutable",
+											"name": "origin",
+											"nameLocation": "442:6:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 25,
+											"src": "435:13:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_string_storage_ptr",
+												"typeString": "string"
+											},
+											"typeName": {
+												"id": 19,
+												"name": "string",
+												"nodeType": "ElementaryTypeName",
+												"src": "435:6:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_storage_ptr",
+													"typeString": "string"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 22,
+											"mutability": "mutable",
+											"name": "manufacturer",
+											"nameLocation": "466:12:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 25,
+											"src": "459:19:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_string_storage_ptr",
+												"typeString": "string"
+											},
+											"typeName": {
+												"id": 21,
+												"name": "string",
+												"nodeType": "ElementaryTypeName",
+												"src": "459:6:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_storage_ptr",
+													"typeString": "string"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 24,
+											"mutability": "mutable",
+											"name": "certificateId",
+											"nameLocation": "497:13:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 25,
+											"src": "489:21:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_bytes32",
+												"typeString": "bytes32"
+											},
+											"typeName": {
+												"id": 23,
+												"name": "bytes32",
+												"nodeType": "ElementaryTypeName",
+												"src": "489:7:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												}
+											},
+											"visibility": "internal"
+										}
+									],
+									"name": "ExtendedDiamondCertificate",
+									"nameLocation": "271:26:0",
+									"nodeType": "StructDefinition",
+									"scope": 129,
+									"src": "264:254:0",
+									"visibility": "public"
+								},
+								{
+									"canonicalName": "IDiamondTraceabilityNFT.DiamondDetails",
+									"id": 43,
+									"members": [
+										{
+											"constant": false,
+											"id": 27,
+											"mutability": "mutable",
+											"name": "uniqueId",
+											"nameLocation": "602:8:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 43,
+											"src": "594:16:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_uint256",
+												"typeString": "uint256"
+											},
+											"typeName": {
+												"id": 26,
+												"name": "uint256",
+												"nodeType": "ElementaryTypeName",
+												"src": "594:7:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 29,
+											"mutability": "mutable",
+											"name": "caratWeight",
+											"nameLocation": "629:11:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 43,
+											"src": "621:19:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_uint256",
+												"typeString": "uint256"
+											},
+											"typeName": {
+												"id": 28,
+												"name": "uint256",
+												"nodeType": "ElementaryTypeName",
+												"src": "621:7:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 31,
+											"mutability": "mutable",
+											"name": "origin",
+											"nameLocation": "658:6:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 43,
+											"src": "651:13:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_string_storage_ptr",
+												"typeString": "string"
+											},
+											"typeName": {
+												"id": 30,
+												"name": "string",
+												"nodeType": "ElementaryTypeName",
+												"src": "651:6:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_storage_ptr",
+													"typeString": "string"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 33,
+											"mutability": "mutable",
+											"name": "color",
+											"nameLocation": "682:5:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 43,
+											"src": "675:12:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_string_storage_ptr",
+												"typeString": "string"
+											},
+											"typeName": {
+												"id": 32,
+												"name": "string",
+												"nodeType": "ElementaryTypeName",
+												"src": "675:6:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_storage_ptr",
+													"typeString": "string"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 35,
+											"mutability": "mutable",
+											"name": "clarity",
+											"nameLocation": "705:7:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 43,
+											"src": "698:14:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_string_storage_ptr",
+												"typeString": "string"
+											},
+											"typeName": {
+												"id": 34,
+												"name": "string",
+												"nodeType": "ElementaryTypeName",
+												"src": "698:6:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_storage_ptr",
+													"typeString": "string"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 38,
+											"mutability": "mutable",
+											"name": "status",
+											"nameLocation": "737:6:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 43,
+											"src": "723:20:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_enum$_DiamondStatus_$8",
+												"typeString": "enum IDiamondTraceabilityNFT.DiamondStatus"
+											},
+											"typeName": {
+												"id": 37,
+												"nodeType": "UserDefinedTypeName",
+												"pathNode": {
+													"id": 36,
+													"name": "DiamondStatus",
+													"nameLocations": [
+														"723:13:0"
+													],
+													"nodeType": "IdentifierPath",
+													"referencedDeclaration": 8,
+													"src": "723:13:0"
+												},
+												"referencedDeclaration": 8,
+												"src": "723:13:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_enum$_DiamondStatus_$8",
+													"typeString": "enum IDiamondTraceabilityNFT.DiamondStatus"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 40,
+											"mutability": "mutable",
+											"name": "currentHolder",
+											"nameLocation": "762:13:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 43,
+											"src": "754:21:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_address",
+												"typeString": "address"
+											},
+											"typeName": {
+												"id": 39,
+												"name": "address",
+												"nodeType": "ElementaryTypeName",
+												"src": "754:7:0",
+												"stateMutability": "nonpayable",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 42,
+											"mutability": "mutable",
+											"name": "price",
+											"nameLocation": "794:5:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 43,
+											"src": "786:13:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_uint256",
+												"typeString": "uint256"
+											},
+											"typeName": {
+												"id": 41,
+												"name": "uint256",
+												"nodeType": "ElementaryTypeName",
+												"src": "786:7:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												}
+											},
+											"visibility": "internal"
+										}
+									],
+									"name": "DiamondDetails",
+									"nameLocation": "568:14:0",
+									"nodeType": "StructDefinition",
+									"scope": 129,
+									"src": "561:246:0",
+									"visibility": "public"
+								},
+								{
+									"canonicalName": "IDiamondTraceabilityNFT.DiamondCertificate",
+									"id": 52,
+									"members": [
+										{
+											"constant": false,
+											"id": 45,
+											"mutability": "mutable",
+											"name": "uniqueId",
+											"nameLocation": "890:8:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 52,
+											"src": "882:16:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_uint256",
+												"typeString": "uint256"
+											},
+											"typeName": {
+												"id": 44,
+												"name": "uint256",
+												"nodeType": "ElementaryTypeName",
+												"src": "882:7:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 47,
+											"mutability": "mutable",
+											"name": "gradingReport",
+											"nameLocation": "916:13:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 52,
+											"src": "909:20:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_string_storage_ptr",
+												"typeString": "string"
+											},
+											"typeName": {
+												"id": 46,
+												"name": "string",
+												"nodeType": "ElementaryTypeName",
+												"src": "909:6:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_storage_ptr",
+													"typeString": "string"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 49,
+											"mutability": "mutable",
+											"name": "issuedBy",
+											"nameLocation": "948:8:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 52,
+											"src": "940:16:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_address",
+												"typeString": "address"
+											},
+											"typeName": {
+												"id": 48,
+												"name": "address",
+												"nodeType": "ElementaryTypeName",
+												"src": "940:7:0",
+												"stateMutability": "nonpayable",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												}
+											},
+											"visibility": "internal"
+										},
+										{
+											"constant": false,
+											"id": 51,
+											"mutability": "mutable",
+											"name": "certificateId",
+											"nameLocation": "975:13:0",
+											"nodeType": "VariableDeclaration",
+											"scope": 52,
+											"src": "967:21:0",
+											"stateVariable": false,
+											"storageLocation": "default",
+											"typeDescriptions": {
+												"typeIdentifier": "t_bytes32",
+												"typeString": "bytes32"
+											},
+											"typeName": {
+												"id": 50,
+												"name": "bytes32",
+												"nodeType": "ElementaryTypeName",
+												"src": "967:7:0",
+												"typeDescriptions": {
+													"typeIdentifier": "t_bytes32",
+													"typeString": "bytes32"
+												}
+											},
+											"visibility": "internal"
+										}
+									],
+									"name": "DiamondCertificate",
+									"nameLocation": "852:18:0",
+									"nodeType": "StructDefinition",
+									"scope": 129,
+									"src": "845:151:0",
+									"visibility": "public"
+								},
+								{
+									"functionSelector": "56b0a97d",
+									"id": 67,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "mineDiamond",
+									"nameLocation": "1040:11:0",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 63,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 54,
+												"mutability": "mutable",
+												"name": "caratWeight",
+												"nameLocation": "1070:11:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 67,
+												"src": "1062:19:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												},
+												"typeName": {
+													"id": 53,
+													"name": "uint256",
+													"nodeType": "ElementaryTypeName",
+													"src": "1062:7:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint256",
+														"typeString": "uint256"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 56,
+												"mutability": "mutable",
+												"name": "origin",
+												"nameLocation": "1106:6:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 67,
+												"src": "1092:20:0",
+												"stateVariable": false,
+												"storageLocation": "memory",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_memory_ptr",
+													"typeString": "string"
+												},
+												"typeName": {
+													"id": 55,
+													"name": "string",
+													"nodeType": "ElementaryTypeName",
+													"src": "1092:6:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_string_storage_ptr",
+														"typeString": "string"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 58,
+												"mutability": "mutable",
+												"name": "color",
+												"nameLocation": "1137:5:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 67,
+												"src": "1123:19:0",
+												"stateVariable": false,
+												"storageLocation": "memory",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_memory_ptr",
+													"typeString": "string"
+												},
+												"typeName": {
+													"id": 57,
+													"name": "string",
+													"nodeType": "ElementaryTypeName",
+													"src": "1123:6:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_string_storage_ptr",
+														"typeString": "string"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 60,
+												"mutability": "mutable",
+												"name": "clarity",
+												"nameLocation": "1167:7:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 67,
+												"src": "1153:21:0",
+												"stateVariable": false,
+												"storageLocation": "memory",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_memory_ptr",
+													"typeString": "string"
+												},
+												"typeName": {
+													"id": 59,
+													"name": "string",
+													"nodeType": "ElementaryTypeName",
+													"src": "1153:6:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_string_storage_ptr",
+														"typeString": "string"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 62,
+												"mutability": "mutable",
+												"name": "nextHolder",
+												"nameLocation": "1193:10:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 67,
+												"src": "1185:18:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 61,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "1185:7:0",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1051:159:0"
+									},
+									"returnParameters": {
+										"id": 66,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 65,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 67,
+												"src": "1229:7:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												},
+												"typeName": {
+													"id": 64,
+													"name": "uint256",
+													"nodeType": "ElementaryTypeName",
+													"src": "1229:7:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint256",
+														"typeString": "uint256"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1228:9:0"
+									},
+									"scope": 129,
+									"src": "1031:207:0",
+									"stateMutability": "nonpayable",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "81f740bd",
+									"id": 81,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "updateDiamondStatus",
+									"nameLocation": "1312:19:0",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 79,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 69,
+												"mutability": "mutable",
+												"name": "uniqueId",
+												"nameLocation": "1350:8:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 81,
+												"src": "1342:16:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												},
+												"typeName": {
+													"id": 68,
+													"name": "uint256",
+													"nodeType": "ElementaryTypeName",
+													"src": "1342:7:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint256",
+														"typeString": "uint256"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 72,
+												"mutability": "mutable",
+												"name": "newStatus",
+												"nameLocation": "1383:9:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 81,
+												"src": "1369:23:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_enum$_DiamondStatus_$8",
+													"typeString": "enum IDiamondTraceabilityNFT.DiamondStatus"
+												},
+												"typeName": {
+													"id": 71,
+													"nodeType": "UserDefinedTypeName",
+													"pathNode": {
+														"id": 70,
+														"name": "DiamondStatus",
+														"nameLocations": [
+															"1369:13:0"
+														],
+														"nodeType": "IdentifierPath",
+														"referencedDeclaration": 8,
+														"src": "1369:13:0"
+													},
+													"referencedDeclaration": 8,
+													"src": "1369:13:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_enum$_DiamondStatus_$8",
+														"typeString": "enum IDiamondTraceabilityNFT.DiamondStatus"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 74,
+												"mutability": "mutable",
+												"name": "newHolder",
+												"nameLocation": "1411:9:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 81,
+												"src": "1403:17:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 73,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "1403:7:0",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 76,
+												"mutability": "mutable",
+												"name": "operationName",
+												"nameLocation": "1445:13:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 81,
+												"src": "1431:27:0",
+												"stateVariable": false,
+												"storageLocation": "memory",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_memory_ptr",
+													"typeString": "string"
+												},
+												"typeName": {
+													"id": 75,
+													"name": "string",
+													"nodeType": "ElementaryTypeName",
+													"src": "1431:6:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_string_storage_ptr",
+														"typeString": "string"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 78,
+												"mutability": "mutable",
+												"name": "remarks",
+												"nameLocation": "1483:7:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 81,
+												"src": "1469:21:0",
+												"stateVariable": false,
+												"storageLocation": "memory",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_memory_ptr",
+													"typeString": "string"
+												},
+												"typeName": {
+													"id": 77,
+													"name": "string",
+													"nodeType": "ElementaryTypeName",
+													"src": "1469:6:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_string_storage_ptr",
+														"typeString": "string"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1331:166:0"
+									},
+									"returnParameters": {
+										"id": 80,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "1506:0:0"
+									},
+									"scope": 129,
+									"src": "1303:204:0",
+									"stateMutability": "nonpayable",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "0c816de4",
+									"id": 91,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "issueCertificate",
+									"nameLocation": "1524:16:0",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 86,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 83,
+												"mutability": "mutable",
+												"name": "uniqueId",
+												"nameLocation": "1559:8:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 91,
+												"src": "1551:16:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												},
+												"typeName": {
+													"id": 82,
+													"name": "uint256",
+													"nodeType": "ElementaryTypeName",
+													"src": "1551:7:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint256",
+														"typeString": "uint256"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 85,
+												"mutability": "mutable",
+												"name": "manufacturer",
+												"nameLocation": "1593:12:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 91,
+												"src": "1579:26:0",
+												"stateVariable": false,
+												"storageLocation": "memory",
+												"typeDescriptions": {
+													"typeIdentifier": "t_string_memory_ptr",
+													"typeString": "string"
+												},
+												"typeName": {
+													"id": 84,
+													"name": "string",
+													"nodeType": "ElementaryTypeName",
+													"src": "1579:6:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_string_storage_ptr",
+														"typeString": "string"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1540:72:0"
+									},
+									"returnParameters": {
+										"id": 90,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 89,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 91,
+												"src": "1631:33:0",
+												"stateVariable": false,
+												"storageLocation": "memory",
+												"typeDescriptions": {
+													"typeIdentifier": "t_struct$_ExtendedDiamondCertificate_$25_memory_ptr",
+													"typeString": "struct IDiamondTraceabilityNFT.ExtendedDiamondCertificate"
+												},
+												"typeName": {
+													"id": 88,
+													"nodeType": "UserDefinedTypeName",
+													"pathNode": {
+														"id": 87,
+														"name": "ExtendedDiamondCertificate",
+														"nameLocations": [
+															"1631:26:0"
+														],
+														"nodeType": "IdentifierPath",
+														"referencedDeclaration": 25,
+														"src": "1631:26:0"
+													},
+													"referencedDeclaration": 25,
+													"src": "1631:26:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_struct$_ExtendedDiamondCertificate_$25_storage_ptr",
+														"typeString": "struct IDiamondTraceabilityNFT.ExtendedDiamondCertificate"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1630:35:0"
+									},
+									"scope": 129,
+									"src": "1515:151:0",
+									"stateMutability": "nonpayable",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "0e065ccd",
+									"id": 99,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "getDiamondDetails",
+									"nameLocation": "1716:17:0",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 94,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 93,
+												"mutability": "mutable",
+												"name": "uniqueId",
+												"nameLocation": "1742:8:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 99,
+												"src": "1734:16:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												},
+												"typeName": {
+													"id": 92,
+													"name": "uint256",
+													"nodeType": "ElementaryTypeName",
+													"src": "1734:7:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint256",
+														"typeString": "uint256"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1733:18:0"
+									},
+									"returnParameters": {
+										"id": 98,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 97,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 99,
+												"src": "1775:21:0",
+												"stateVariable": false,
+												"storageLocation": "memory",
+												"typeDescriptions": {
+													"typeIdentifier": "t_struct$_DiamondDetails_$43_memory_ptr",
+													"typeString": "struct IDiamondTraceabilityNFT.DiamondDetails"
+												},
+												"typeName": {
+													"id": 96,
+													"nodeType": "UserDefinedTypeName",
+													"pathNode": {
+														"id": 95,
+														"name": "DiamondDetails",
+														"nameLocations": [
+															"1775:14:0"
+														],
+														"nodeType": "IdentifierPath",
+														"referencedDeclaration": 43,
+														"src": "1775:14:0"
+													},
+													"referencedDeclaration": 43,
+													"src": "1775:14:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_struct$_DiamondDetails_$43_storage_ptr",
+														"typeString": "struct IDiamondTraceabilityNFT.DiamondDetails"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1774:23:0"
+									},
+									"scope": 129,
+									"src": "1707:91:0",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "57d9a0b6",
+									"id": 107,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "getDiamondCertificate",
+									"nameLocation": "1842:21:0",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 102,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 101,
+												"mutability": "mutable",
+												"name": "uniqueId",
+												"nameLocation": "1872:8:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 107,
+												"src": "1864:16:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												},
+												"typeName": {
+													"id": 100,
+													"name": "uint256",
+													"nodeType": "ElementaryTypeName",
+													"src": "1864:7:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint256",
+														"typeString": "uint256"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1863:18:0"
+									},
+									"returnParameters": {
+										"id": 106,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 105,
+												"mutability": "mutable",
+												"name": "",
+												"nameLocation": "-1:-1:-1",
+												"nodeType": "VariableDeclaration",
+												"scope": 107,
+												"src": "1905:25:0",
+												"stateVariable": false,
+												"storageLocation": "memory",
+												"typeDescriptions": {
+													"typeIdentifier": "t_struct$_DiamondCertificate_$52_memory_ptr",
+													"typeString": "struct IDiamondTraceabilityNFT.DiamondCertificate"
+												},
+												"typeName": {
+													"id": 104,
+													"nodeType": "UserDefinedTypeName",
+													"pathNode": {
+														"id": 103,
+														"name": "DiamondCertificate",
+														"nameLocations": [
+															"1905:18:0"
+														],
+														"nodeType": "IdentifierPath",
+														"referencedDeclaration": 52,
+														"src": "1905:18:0"
+													},
+													"referencedDeclaration": 52,
+													"src": "1905:18:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_struct$_DiamondCertificate_$52_storage_ptr",
+														"typeString": "struct IDiamondTraceabilityNFT.DiamondCertificate"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1904:27:0"
+									},
+									"scope": 129,
+									"src": "1833:99:0",
+									"stateMutability": "view",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "17fcfe22",
+									"id": 114,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "setForSale",
+									"nameLocation": "1970:10:0",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 112,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 109,
+												"mutability": "mutable",
+												"name": "uniqueId",
+												"nameLocation": "1989:8:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 114,
+												"src": "1981:16:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												},
+												"typeName": {
+													"id": 108,
+													"name": "uint256",
+													"nodeType": "ElementaryTypeName",
+													"src": "1981:7:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint256",
+														"typeString": "uint256"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 111,
+												"mutability": "mutable",
+												"name": "price",
+												"nameLocation": "2007:5:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 114,
+												"src": "1999:13:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												},
+												"typeName": {
+													"id": 110,
+													"name": "uint256",
+													"nodeType": "ElementaryTypeName",
+													"src": "1999:7:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint256",
+														"typeString": "uint256"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "1980:33:0"
+									},
+									"returnParameters": {
+										"id": 113,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "2022:0:0"
+									},
+									"scope": 129,
+									"src": "1961:62:0",
+									"stateMutability": "nonpayable",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "633bea15",
+									"id": 121,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "sellDiamond",
+									"nameLocation": "2040:11:0",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 119,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 116,
+												"mutability": "mutable",
+												"name": "uniqueId",
+												"nameLocation": "2060:8:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 121,
+												"src": "2052:16:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												},
+												"typeName": {
+													"id": 115,
+													"name": "uint256",
+													"nodeType": "ElementaryTypeName",
+													"src": "2052:7:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint256",
+														"typeString": "uint256"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 118,
+												"mutability": "mutable",
+												"name": "buyer",
+												"nameLocation": "2078:5:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 121,
+												"src": "2070:13:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_address",
+													"typeString": "address"
+												},
+												"typeName": {
+													"id": 117,
+													"name": "address",
+													"nodeType": "ElementaryTypeName",
+													"src": "2070:7:0",
+													"stateMutability": "nonpayable",
+													"typeDescriptions": {
+														"typeIdentifier": "t_address",
+														"typeString": "address"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "2051:33:0"
+									},
+									"returnParameters": {
+										"id": 120,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "2094:0:0"
+									},
+									"scope": 129,
+									"src": "2031:64:0",
+									"stateMutability": "nonpayable",
+									"virtual": false,
+									"visibility": "external"
+								},
+								{
+									"functionSelector": "82367b2d",
+									"id": 128,
+									"implemented": false,
+									"kind": "function",
+									"modifiers": [],
+									"name": "updatePrice",
+									"nameLocation": "2110:11:0",
+									"nodeType": "FunctionDefinition",
+									"parameters": {
+										"id": 126,
+										"nodeType": "ParameterList",
+										"parameters": [
+											{
+												"constant": false,
+												"id": 123,
+												"mutability": "mutable",
+												"name": "uniqueId",
+												"nameLocation": "2130:8:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 128,
+												"src": "2122:16:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												},
+												"typeName": {
+													"id": 122,
+													"name": "uint256",
+													"nodeType": "ElementaryTypeName",
+													"src": "2122:7:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint256",
+														"typeString": "uint256"
+													}
+												},
+												"visibility": "internal"
+											},
+											{
+												"constant": false,
+												"id": 125,
+												"mutability": "mutable",
+												"name": "price",
+												"nameLocation": "2148:5:0",
+												"nodeType": "VariableDeclaration",
+												"scope": 128,
+												"src": "2140:13:0",
+												"stateVariable": false,
+												"storageLocation": "default",
+												"typeDescriptions": {
+													"typeIdentifier": "t_uint256",
+													"typeString": "uint256"
+												},
+												"typeName": {
+													"id": 124,
+													"name": "uint256",
+													"nodeType": "ElementaryTypeName",
+													"src": "2140:7:0",
+													"typeDescriptions": {
+														"typeIdentifier": "t_uint256",
+														"typeString": "uint256"
+													}
+												},
+												"visibility": "internal"
+											}
+										],
+										"src": "2121:33:0"
+									},
+									"returnParameters": {
+										"id": 127,
+										"nodeType": "ParameterList",
+										"parameters": [],
+										"src": "2164:0:0"
+									},
+									"scope": 129,
+									"src": "2101:64:0",
+									"stateMutability": "nonpayable",
+									"virtual": false,
+									"visibility": "external"
+								}
+							],
+							"scope": 130,
+							"src": "61:2156:0",
+							"usedErrors": [],
+							"usedEvents": []
+						}
+					],
+					"src": "33:2184:0"
+				},
+				"id": 0
+			}
+		}
+	}
+}

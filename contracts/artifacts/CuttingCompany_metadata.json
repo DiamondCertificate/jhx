@@ -1,0 +1,131 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_traceabilityNFTAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "traceabilityNFT",
+				"outputs": [
+					{
+						"internalType": "contract IDiamondTraceabilityNFT",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "outsidepwd",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "newHolder",
+						"type": "address"
+					}
+				],
+				"name": "updateDiamondToCut",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"try1/2.cut.sol": "CuttingCompany"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"try1/2.cut.sol": {
+			"keccak256": "0x9d6b99315c0b2b86f97c8dba06be571eaba545c0b9ceb9119da01ed0a72c57f3",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://0cf41276a9214b82a20de750275cb30176416dc17c329f6a8eeeec6abc53a415",
+				"dweb:/ipfs/QmbEuQCXUcTbaXrmzkNpwdPQzWiY2WbCYDjrFvmxx6sgnX"
+			]
+		},
+		"try1/IDiamondTraceabilityNFT.sol": {
+			"keccak256": "0x8c1709e03ccccce7c6284274888494e8a685058f2a154657aa4e70746c1ddfdc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://aea9419b720f6eb8e5cffe00a9886c13d67f28ba44a145520ff8d50fff39f80f",
+				"dweb:/ipfs/QmS92BLXXvgSeUKZJDmHyLKgiX6gQnikMnqueM8RAp58h2"
+			]
+		}
+	},
+	"version": 1
+}

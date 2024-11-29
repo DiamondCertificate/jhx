@@ -1,0 +1,131 @@
+{
+	"compiler": {
+		"version": "0.8.26+commit.8a97fa7a"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "_traceabilityNFTAddress",
+						"type": "address"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "traceabilityNFT",
+				"outputs": [
+					{
+						"internalType": "contract IDiamondTraceabilityNFT",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "outsidepwd",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "uniqueId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "newHolder",
+						"type": "address"
+					}
+				],
+				"name": "updateDiamondToGraded",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"try1/3.grading.sol": "GradingLab"
+		},
+		"evmVersion": "cancun",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"try1/3.grading.sol": {
+			"keccak256": "0x34cfaf3eaf8fb80f942dc81ab400dfb9ab0b6860963cf4f49626e6a690affce9",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://fa74d3e07d86963aa3ddebd0dec452f1318fe2fef46f41eb68954bfb9e14f6a0",
+				"dweb:/ipfs/QmceUVXuMoZ9XaALGVWhBorNKV2mF1vc791KY5pNjBLqge"
+			]
+		},
+		"try1/IDiamondTraceabilityNFT.sol": {
+			"keccak256": "0x8c1709e03ccccce7c6284274888494e8a685058f2a154657aa4e70746c1ddfdc",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://aea9419b720f6eb8e5cffe00a9886c13d67f28ba44a145520ff8d50fff39f80f",
+				"dweb:/ipfs/QmS92BLXXvgSeUKZJDmHyLKgiX6gQnikMnqueM8RAp58h2"
+			]
+		}
+	},
+	"version": 1
+}
