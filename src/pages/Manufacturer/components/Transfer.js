@@ -1,21 +1,10 @@
 import { useState } from 'react';
-import {
-  Container,
-  Paper,
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Stack,
-  Card,
-  CardContent,
-  Divider,
-  Chip,
-  Alert
-} from '@mui/material';
+import { Container, Paper, Typography, Box, Stack, TextField, Button, Card, CardContent, Divider, Chip, Alert } from '@mui/material';
+import { connectBlockchain, getContracts } from './utils/contract'; // 引入合约连接方法
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import TimelineIcon from '@mui/icons-material/Timeline';
+import SearchIcon from '@mui/icons-material/Search';
 
 const Verify = () => {
   const [searchId, setSearchId] = useState('');
@@ -27,31 +16,38 @@ const Verify = () => {
     try {
       setLoading(true);
       setError('');
-      
-      // Simulating API Call Delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
 
       if (searchId) {
-        // Simulation verification results
-        setVerificationResult({
+        // 连接到智能合约
+        const { diamondContract } = await connectBlockchain();
+        
+        // 获取钻石的详细信息
+        const diamondDetails = await diamondContract.getDiamondDetails(searchId);
+        
+        // 获取钻石的生命周期记录
+        const diamondLifecycle = await diamondContract.getDiamondLifecycle(searchId);
+
+        // 格式化并设置钻石的真实性验证结果
+        const formattedResult = {
           id: searchId,
-          isAuthentic: true,
+          isAuthentic: diamondDetails.currentHolder !== "0x0000000000000000000000000000000000000000", // 假设地址为0的钻石表示无效
           details: {
-            manufacturer: "XXX Jewelry Company",
-            manufactureDate: "2024-01-15",
-            weight: "1.5",
-            color: "D",
-            clarity: "VVS1",
-            cut: "Excellent",
-            certificateNo: "GIA2196152152"
+            manufacturer: diamondDetails.manufacturer,
+            manufactureDate: diamondDetails.manufactureDate,
+            weight: diamondDetails.caratWeight,
+            color: diamondDetails.color,
+            clarity: diamondDetails.clarity,
+            cut: diamondDetails.cut,
+            certificateNo: diamondDetails.certificateId,
           },
-          history: [
-            { date: "2024-01-01", event: "Mine" },
-            { date: "2024-01-10", event: "Cut and Polish" },
-            { date: "2024-01-15", event: "Authenticate" },
-            { date: "2024-01-20", event: "Manufacture" }
-          ]
-        });
+          history: diamondLifecycle.map(item => ({
+            date: item.date,
+            event: item.operationName,
+            notes: item.remarks,
+          }))
+        };
+
+        setVerificationResult(formattedResult);
       } else {
         setError('Please enter the diamond ID or certificate number');
       }
@@ -66,9 +62,7 @@ const Verify = () => {
   return (
     <Container maxWidth="md">
       <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
-        <Typography variant="h4" align="center" gutterBottom 
-                  sx={{ color: '#2E7D32', fontWeight: 'bold' }}
-        >
+        <Typography variant="h4" align="center" gutterBottom sx={{ color: '#2E7D32', fontWeight: 'bold' }}>
           Diamond Authenticity Verification
         </Typography>
 
@@ -119,8 +113,8 @@ const Verify = () => {
                 </Stack>
                 <Divider />
                 <Box sx={{ mt: 2 }}>
-                  <Chip 
-                    label={verificationResult.isAuthentic ? "Certification Passed" : "Certification Failed"} 
+                  <Chip
+                    label={verificationResult.isAuthentic ? "Certification Passed" : "Certification Failed"}
                     color={verificationResult.isAuthentic ? "success" : "error"}
                     sx={{ mb: 2 }}
                   />
@@ -128,13 +122,13 @@ const Verify = () => {
                     {Object.entries(verificationResult.details).map(([key, value]) => (
                       <Box key={key} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Typography color="text.secondary">
-                          {key === 'manufacturer' ? 'manufacturer' :
-                           key === 'manufactureDate' ? 'manufactureDate' :
-                           key === 'weight' ? 'weight' :
-                           key === 'color' ? 'color' :
-                           key === 'clarity' ? 'clarity' :
-                           key === 'cut' ? 'cut' :
-                           key === 'certificateNo' ? 'certificateNo' : key}
+                          {key === 'manufacturer' ? 'Manufacturer' :
+                            key === 'manufactureDate' ? 'Manufacture Date' :
+                            key === 'weight' ? 'Weight' :
+                            key === 'color' ? 'Color' :
+                            key === 'clarity' ? 'Clarity' :
+                            key === 'cut' ? 'Cut' :
+                            key === 'certificateNo' ? 'Certificate No' : key}
                         </Typography>
                         <Typography>{value}</Typography>
                       </Box>
@@ -153,8 +147,8 @@ const Verify = () => {
                 <Divider />
                 <Box sx={{ mt: 2 }}>
                   {verificationResult.history.map((item, index) => (
-                    <Box key={index} sx={{ 
-                      display: 'flex', 
+                    <Box key={index} sx={{
+                      display: 'flex',
                       justifyContent: 'space-between',
                       mb: 1,
                       p: 1,

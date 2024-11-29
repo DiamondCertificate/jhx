@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import DiamondIcon from '@mui/icons-material/Diamond';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { mineDiamond, issueCertificate } from './utils/contract';  // 引入合约方法
 
 // Custom style components
 const GlassContainer = styled(Paper)(({ theme }) => ({
@@ -40,12 +41,12 @@ const StyledButton = styled(Button)(({ theme }) => ({
 }));
 
 const GradientButton = styled(StyledButton)(({ theme }) => ({
-  background: /*'linear-gradient(45deg, #FF6B6B 30%, #FFE66D 90%)'*/'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
+  background: 'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
   border: 0,
   color: 'white',
   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   '&:hover': {
-    background: /*'linear-gradient(45deg, #FFE66D 30%, #FF6B6B 90%)'*/'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
+    background: 'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)',
     transform: 'scale(1.02)',
   },
 }));
@@ -74,7 +75,6 @@ const AnimatedCard = styled(Card)(({ theme }) => ({
 }));
 
 const ManufacturerCreate = () => {
-
   const [activeStep, setActiveStep] = useState(0);
   const [diamondData, setDiamondData] = useState({
     id: '',
@@ -109,10 +109,25 @@ const ManufacturerCreate = () => {
     });
   };
 
-  const handleCreateCertificate = () => {
-    // In the future, smart contracts will be called here.
-    console.log('Creating certificate:', diamondData);
-    setCertificateCreated(true);
+  // 连接合约并创建证书
+  const handleCreateCertificate = async () => {
+    try {
+      // 调用合约的 mineDiamond 方法来创建钻石数据
+      const uniqueId = await mineDiamond(
+        diamondData.weight, 
+        diamondData.origin, 
+        diamondData.color, 
+        diamondData.clarity, 
+        diamondData.cut
+      );
+
+      // 调用合约的 issueCertificate 方法来生成证书
+      const certificate = await issueCertificate(uniqueId, diamondData.manufacturer);
+      console.log('Certificate created:', certificate);
+      setCertificateCreated(true);
+    } catch (error) {
+      console.error('Error creating certificate:', error);
+    }
   };
 
   const renderStepContent = (step) => {
