@@ -17,8 +17,9 @@ import {
 } from '@mui/material';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import VerifiedIcon from '@mui/icons-material/Verified';
-//import TimelineIcon from '@mui/icons-material/Timeline';
 import SearchIcon from '@mui/icons-material/Search';
+
+import { getDiamondDetails, verifyDiamond } from './utils/contract';  // 引入合约方法
 
 // Custom Style Component
 const GlassContainer = styled(Paper)(({ theme }) => ({
@@ -73,28 +74,26 @@ const Verify = () => {
   const [verificationResult, setVerificationResult] = useState(null);
   const [showScanner, setShowScanner] = useState(false);
 
-  const handleVerify = () => {
+  // 处理验证按钮点击
+  const handleVerify = async () => {
     if (searchId) {
-      setVerificationResult({
-        id: searchId,
-        isAuthentic: true,
-        details: {
-          manufacturer: "XXX Jewelry Company",
-          manufactureDate: "2024-01-15",
-          weight: "1.5",
-          color: "D",
-          clarity: "VVS1",
-          cut: "Excellent",
-          certificateNo: "GIA2196152152"
-        },
-        history: [
-          { date: "2024-01-01", event: "Mine" },
-          { date: "2024-01-10", event: "Cut and Polish" },
-          { date: "2024-01-15", event: "Authenticate" },
-          { date: "2024-01-20", event: "Manufacture" }
-        ]
-      
-      });
+      try {
+        // 从合约获取钻石详情
+        const diamondDetails = await getDiamondDetails(searchId);
+        
+        // 验证钻石的真实性
+        const isAuthentic = await verifyDiamond(searchId);
+
+        setVerificationResult({
+          id: searchId,
+          isAuthentic: isAuthentic,
+          details: diamondDetails,
+          history: diamondDetails.operations || []  // 从合约返回的历史记录
+        });
+      } catch (error) {
+        console.error("Error verifying diamond:", error);
+        setVerificationResult(null);
+      }
     }
   };
 
@@ -180,13 +179,13 @@ const Verify = () => {
                               '&:hover': { bgcolor: 'rgba(137, 207, 240, 0.1)' }
                             }}>
                               <Typography color="text.secondary">
-                                {key === 'manufacturer' ? 'manufacturer' :
-                                 key === 'manufactureDate' ? 'manufactureDate' :
-                                 key === 'weight' ? 'weight' :
-                                 key === 'color' ? 'color' :
-                                 key === 'clarity' ? 'clarity' :
-                                 key === 'cut' ? 'cut' :
-                                 key === 'certificateNo' ? 'certificateNo' : key}
+                                {key === 'manufacturer' ? 'Manufacturer' :
+                                 key === 'manufactureDate' ? 'Manufacture Date' :
+                                 key === 'weight' ? 'Weight' :
+                                 key === 'color' ? 'Color' :
+                                 key === 'clarity' ? 'Clarity' :
+                                 key === 'cut' ? 'Cut' :
+                                 key === 'certificateNo' ? 'Certificate No' : key}
                               </Typography>
                               <Typography sx={{ fontWeight: 'bold' }}>{value}</Typography>
                             </Box>
