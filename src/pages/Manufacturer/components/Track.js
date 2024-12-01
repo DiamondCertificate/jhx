@@ -30,10 +30,11 @@ import {
   TimelineConnector,
   TimelineContent,
   TimelineDot
-} from '@mui/lab';
+}from '@mui/lab';
 
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import VerifiedIcon from '@mui/icons-material/Verified';
+//import TimelineIcon from '@mui/icons-material/Timeline';
 import SearchIcon from '@mui/icons-material/Search';
 import DiamondIcon from '@mui/icons-material/Diamond';
 import FactoryIcon from '@mui/icons-material/Factory';
@@ -41,8 +42,9 @@ import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
-
-import { connectBlockchain, getContracts } from './utils/contract'; // 引入合约功能
+import Web3 from 'web3';
+import deployedAddresses from '../../config/deployedAddresses.json';
+import DiamondTraceabilityNFT from '../../config/DiamondTraceabilityNFT.json';
 
 const statusOptions = [
   { value: 'mining', label: 'Mining completion', icon: <DiamondIcon /> },
@@ -151,88 +153,86 @@ const StatusUpdateDialog = ({ open, onClose, onSubmit, currentStatus }) => {
   );
 };
 
+
 const LifecycleTrack = () => {
   const [searchId, setSearchId] = useState('');
   const [verificationResult, setVerificationResult] = useState(null);
   const [showScanner, setShowScanner] = useState(false);
   const [openUpdateDialog, setOpenUpdateDialog] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
 
-  // 连接区块链和智能合约
-  const handleConnectBlockchain = async () => {
-    try {
-      setLoading(true);
-      const contracts = await connectBlockchain(); // 连接到区块链
-      const { diamondContract } = getContracts();
-
-      console.log("Connected to contracts:", contracts);
-      return diamondContract; // 返回钻石合约实例
-    } catch (error) {
-      setError('Failed to connect to blockchain. Please try again.');
-      console.error("Blockchain connection error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // 验证钻石的生命周期
   const handleVerify = async () => {
-    if (searchId) {
-      try {
-        setLoading(true);
-        const diamondContract = await handleConnectBlockchain();
-        const lifecycle = await diamondContract.getDiamondLifecycle(searchId); // 获取钻石生命周期
-
-        setVerificationResult({
-          id: searchId,
-          isAuthentic: true,
-          details: {
-            manufacturer: "XXX Jewelry Company",
-            manufactureDate: "2024-01-15",
-            weight: "1.5",
-            color: "D",
-            clarity: "VVS1",
-            cut: "Excellent",
-            certificateNo: "GIA2196152152"
-          },
-          history: lifecycle
-        });
-      } catch (error) {
-        setError('Failed to fetch lifecycle. Please try again.');
-      } finally {
-        setLoading(false);
+    try {
+      if (!window.ethereum) {
+        throw new Error('Please install MetaMask.');
       }
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const account = accounts[0];
+      const diamondRecord = await contract.methods.getDiamondRecord(searchId).call({ from: account });
+  
+      setVerificationResult({
+        id: searchId,
+        isAuthentic: true,
+        details: {
+          manufacturer: diamondRecord.manufacturer,
+          manufactureDate: diamondRecord.manufactureDate,
+          weight: diamondRecord.weight,
+          color: diamondRecord.color,
+          clarity: diamondRecord.clarity,
+          cut: diamondRecord.cut,
+          certificateNo: diamondRecord.certificateNo
+        },
+        history: diamondRecord.history.map(event => ({
+          date: event.date,
+          event: event.description,
+          status: event.status,
+          notes: event.notes,
+        }))
+      });
+    } catch (error) {
+      console.error('Error fetching diamond record:', error);
     }
   };
+  
 
-  // 更新钻石状态
   const handleStatusUpdate = async (newStatus, notes) => {
     try {
-      setLoading(true);
-      const diamondContract = await handleConnectBlockchain();
-      const tx = await diamondContract.updateDiamondStatus(searchId, newStatus, notes);
-      await tx.wait(); // 等待交易完成
-
+      if (!window.ethereum) {
+        throw new Error('Please install MetaMask.');
+      }
+  
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+      const account = accounts[0];
+  
+      await contract.methods.updateDiamondStatus(searchId, newStatus, notes).send({ from: account });
+      
+      // Simulated Update in UI
       const newEvent = {
         date: new Date().toISOString().split('T')[0],
         event: statusOptions.find(opt => opt.value === newStatus)?.label || newStatus,
         status: newStatus,
         notes: notes
       };
-
+  
       setVerificationResult(prev => ({
         ...prev,
         currentStatus: newStatus,
         history: [...prev.history, newEvent]
       }));
-
+  
       setOpenUpdateDialog(false);
     } catch (error) {
-      setError('Failed to update status. Please try again.');
-      console.error("Status update error:", error);
-    } finally {
-      setLoading(false);
+      console.error('Error updating diamond status:', error);
+    }
+  };
+  
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'mining': return <DiamondIcon />;
+      case 'cutting': return <FactoryIcon />;
+      case 'quality_control': return <VerifiedUserIcon />;
+      case 'received_by_maker':
+      case 'sold': return <LocalShippingIcon />;
+      default: return <DiamondIcon />;
     }
   };
 
@@ -288,59 +288,76 @@ const LifecycleTrack = () => {
                 <ResultCard>
                   <CardContent>
                     <Stack spacing={3}>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <VerifiedIcon sx={{ color: '#89CFF0', fontSize: 30 }} />
-                        <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#1a237e' }}>
-                          Life Cycle Record
-                        </Typography>
-                      </Box>
-                      <Divider sx={{ borderColor: 'rgba(137, 207, 240, 0.2)' }} />
+                    <Box sx={{ 
+              display: 'flex', 
+              justifyContent: 'space-between',
+              alignItems: 'center'
+            }}>
+              {/* Left heading section */}
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                <VerifiedIcon sx={{ color: '#89CFF0', fontSize: 30 }} />
+                <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#1a237e' }}>
+                Life Cycle Record
+                </Typography>
+              </Box>
+              
+              {/* The right button section */}
+              <GradientButton
+                startIcon={<AddIcon />}
+                onClick={() => setOpenUpdateDialog(true)}
+              >
+                Update Status
+              </GradientButton>
+            </Box>
 
-                      {/* Timeline */}
-                      <Timeline position="alternate">
-                        {verificationResult.history.map((item, index) => (
-                          <TimelineItem key={index}>
-                            <TimelineSeparator>
-                              <TimelineDot sx={{ 
-                                background: 'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)'
-                              }}>
-                                {getStatusIcon(item.status)}
-                              </TimelineDot>
-                              {index < verificationResult.history.length - 1 && <TimelineConnector />}
-                            </TimelineSeparator>
-                            <TimelineContent>
-                              <Card sx={{ 
-                                bgcolor: 'rgba(255, 255, 255, 0.1)',
-                                backdropFilter: 'blur(10px)',
-                                '&:hover': {
-                                   transform: 'translateY(-5px)',
-                                },
-                                transition: 'transform 0.3s ease'
-                              }}>
-                                 <CardContent>
-                                    <Typography variant="h6" sx={{ color: '#1a237e' }}>
-                                       {item.event}
-                                    </Typography>
-                                    <Typography color="textSecondary">
-                                       {item.date}
-                                    </Typography>
-                                    {item.notes && (
-                                      <Typography sx={{ mt: 1, color: '#666' }}>
-                                         {item.notes}
-                                      </Typography>
-                                    )}
-                                  </CardContent>
-                                </Card>
-                              </TimelineContent>
-                            </TimelineItem>
-                          ))}
-                        </Timeline>
-                    </Stack>
-                  </CardContent>
-                </ResultCard>
-              </Zoom>
-            </Stack>
-          )}
+            {/* timeline */}
+            <Divider sx={{ borderColor: 'rgba(137, 207, 240, 0.2)' }} />
+
+                      
+            <Timeline position="alternate">
+              {verificationResult.history.map((item, index) => (
+                <TimelineItem key={index}>
+                  <TimelineSeparator>
+                    <TimelineDot sx={{ 
+                      background: 'linear-gradient(45deg, #89CFF0 30%, #B6E0FF 90%)'
+                    }}>
+                      {getStatusIcon(item.status)}
+                    </TimelineDot>
+                    {index < verificationResult.history.length - 1 && <TimelineConnector />}
+                   </TimelineSeparator>
+                   <TimelineContent>
+                      <Card sx={{ 
+                        bgcolor: 'rgba(255, 255, 255, 0.1)',
+                        backdropFilter: 'blur(10px)',
+                        '&:hover': {
+                           transform: 'translateY(-5px)',
+                        },
+                        transition: 'transform 0.3s ease'
+                      }}>
+                         <CardContent>
+                            <Typography variant="h6" sx={{ color: '#1a237e' }}>
+                               {item.event}
+                            </Typography>
+                            <Typography color="textSecondary">
+                               {item.date}
+                            </Typography>
+                            {item.notes && (
+                              <Typography sx={{ mt: 1, color: '#666' }}>
+                                 {item.notes}
+                              </Typography>
+                            )}
+                          </CardContent>
+                        </Card>
+                      </TimelineContent>
+                    </TimelineItem>
+                  ))}
+                </Timeline>
+              </Stack>
+            </CardContent>
+          </ResultCard>
+        </Zoom>
+      </Stack>
+    )}
 
           <StatusUpdateDialog
             open={openUpdateDialog}

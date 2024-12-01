@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Web3 from 'web3';
 import { 
   Container, 
   Typography, 
@@ -11,12 +12,15 @@ import {
   Select,
   FormControl,
   InputLabel,
-  Fade
+  Fade,
+  CircularProgress
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import ProductCard from './ProductCard';
 import { styled } from '@mui/material/styles';
-import { getAllDiamonds, purchaseDiamond } from './utils/contract';  // 引入合约方法
+import deployedAddresses from '../../config/deployedAddresses.json';
+import DiamondTraceabilityNFT from '../../config/DiamondTraceabilityNFT.json';
+
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   background: 'rgba(255, 255, 255, 0.25)',
@@ -33,55 +37,51 @@ const ProductList = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('recommended');
-  const [products, setProducts] = useState([]);  // 保存从合约获取的商品数据
-  const [error, setError] = useState('');
-  const [purchaseSuccess, setPurchaseSuccess] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // 获取所有钻石信息
   useEffect(() => {
-    const fetchDiamonds = async () => {
-      try {
-        const diamonds = await getAllDiamonds();  // 从合约获取商品数据
-        setProducts(diamonds);
-      } catch (err) {
-        setError('Failed to fetch diamonds');
-      }
-    };
+    const web3 = new Web3(window.ethereum);
+    const contract = new web3.eth.Contract(
+      DiamondTraceabilityNFT.abi,
+      deployedAddresses.DiamondTraceabilityNFT
+    );
 
-    fetchDiamonds();
+    async function fetchProducts() {
+      try {
+        const productIds = await contract.methods.getAllProductIds().call();
+        const productDetails = await Promise.all(
+          productIds.map(async (id) => {
+            const details = await contract.methods.getDiamondDetails(id).call();
+            return {
+              id,
+              name: details.name || 'Unknown Diamond',
+              description: `${details.weight} carat ${details.color} color ${details.clarity} clarity ${details.cut} cut`,
+              price: Web3.utils.fromWei(details.price, 'ether'),
+              imageUrl: 'https://example.com/image1.jpg', // Placeholder image URL
+              certificateId: details.certificateNo,
+              contractAddress: deployedAddresses.DiamondTraceabilityNFT,
+            };
+          })
+        );
+        setProducts(productDetails);
+      } catch (err) {
+        console.error('Error fetching products:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProducts();
   }, []);
 
-  // 处理商品点击事件
   const handleProductClick = (productId) => {
     navigate(`/consumer/products/${productId}`);
   };
 
-  // 处理购买商品
-  const handlePurchase = async (product) => {
-    try {
-      await purchaseDiamond(product.id, product.price);  // 调用合约进行购买
-      setPurchaseSuccess(true);
-    } catch (err) {
-      setError('Purchase failed');
-    }
-  };
-
-  // 处理搜索功能
-  const filteredProducts = products.filter((product) => 
-    product.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    product.description.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  // 处理排序功能（示例：按价格排序）
-  const sortedProducts = filteredProducts.sort((a, b) => {
-    if (sortBy === 'price_asc') {
-      return a.price - b.price;
-    } else if (sortBy === 'price_desc') {
-      return b.price - a.price;
-    } else {
-      return 0; // 推荐默认排序
-    }
-  });
+  if (loading) {
+    return <CircularProgress />;
+  }
 
   return (
     <StyledContainer maxWidth="lg">
@@ -138,10 +138,10 @@ const ProductList = () => {
                 borderRadius: 2,
               }}
             >
-              <MenuItem value="recommended">Recommend</MenuItem>
+              <MenuItem value="recommended">Recommend </MenuItem>
               <MenuItem value="price_asc">Prices range from low to high</MenuItem>
               <MenuItem value="price_desc">Prices go from high to low</MenuItem>
-              <MenuItem value="newest">New</MenuItem>
+              <MenuItem value="newest">New </MenuItem>
             </Select>
           </FormControl>
         </Stack>
@@ -153,7 +153,9 @@ const ProductList = () => {
           gap: 4,
           justifyContent: 'center'
         }}>
-          {sortedProducts.map((product) => (
+          {products.filter((product) =>
+            product.name.toLowerCase().includes(searchTerm.toLowerCase())
+          ).map((product) => (
             <Fade in timeout={500} key={product.id}>
               <Box sx={{ 
                 width: { xs: '100%', sm: 'calc(50% - 32px)', md: 'calc(33.333% - 32px)' },
@@ -163,35 +165,11 @@ const ProductList = () => {
                   product={product} 
                   onClick={() => handleProductClick(product.id)}
                 />
-                <Button 
-                  variant="contained"
-                  onClick={() => handlePurchase(product)}  // 点击购买按钮
-                >
-                  Buy Now
-                </Button>
               </Box>
             </Fade>
           ))}
         </Box>
       </Stack>
-
-      {/* Error Snackbar */}
-      {error && (
-        <Snackbar open={!!error} autoHideDuration={6000}>
-          <Alert severity="error" onClose={() => setError('')}>
-            {error}
-          </Alert>
-        </Snackbar>
-      )}
-
-      {/* Success Snackbar */}
-      {purchaseSuccess && (
-        <Snackbar open={purchaseSuccess} autoHideDuration={6000}>
-          <Alert severity="success" onClose={() => setPurchaseSuccess(false)}>
-            Purchase successful!
-          </Alert>
-        </Snackbar>
-      )}
     </StyledContainer>
   );
 };

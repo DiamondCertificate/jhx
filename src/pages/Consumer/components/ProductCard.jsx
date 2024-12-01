@@ -1,9 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardMedia, Typography, Box, styled, Chip, Button } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Card, CardContent, CardMedia, Typography, Box, styled, Chip } from '@mui/material';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import { getContracts } from '../utils/contract';  // 引入合约交互方法
+import { ethers } from 'ethers'; // Import ethers.js for interacting with the blockchain
 
-// Custom styled components
+// Import the ABI and the deployed addresses for the smart contracts
+import deployedAddresses from '../../config/deployedAddresses.json';
+import DiamondTraceabilityNFT from '../../config/DiamondTraceabilityNFT.json';
+
+const DiamondTraceabilityNFTABI = DiamondTraceabilityNFT.abi; // Ensure the path is correct for the ABI file
+
+// Initialize Ethereum provider and contract instance
+let provider, signer, diamondContract;
+
+if (typeof window.ethereum !== 'undefined') {
+  provider = new ethers.providers.Web3Provider(window.ethereum);
+  signer = provider.getSigner();
+  diamondContract = new ethers.Contract(deployedAddresses.DiamondTraceabilityNFT, DiamondTraceabilityNFTABI, signer);
+}
+
 const StyledCard = styled(Card)(({ theme }) => ({
   background: 'rgba(255, 255, 255, 0.25)',
   backdropFilter: 'blur(10px)',
@@ -28,65 +42,35 @@ const CertifiedBadge = styled(Chip)(({ theme }) => ({
 }));
 
 const ProductCard = ({ product, onClick }) => {
-  const [diamondData, setDiamondData] = useState(null);
-  const [diamondPrice, setDiamondPrice] = useState(0);
-  const [isCertified, setIsCertified] = useState(false);
+  const [diamondDetails, setDiamondDetails] = useState(null);
 
-  // 获取钻石信息
   useEffect(() => {
-    async function fetchDiamondData() {
-      const contracts = await getContracts(); // 获取合约实例
-      if (contracts && product.id) {
-        const { diamondContract } = contracts;
-        
+    async function fetchDiamondDetails() {
+      if (diamondContract && product.id) {
         try {
-          // 获取钻石的详细信息
-          const diamondDetails = await diamondContract.getDiamondDetails(product.id); // 获取钻石详细信息
-          const price = await diamondContract.getDiamondPrice(product.id); // 获取钻石价格
-          const certified = await diamondContract.verifyOwnership(product.id); // 验证钻石认证
-
-          setDiamondData(diamondDetails);
-          setDiamondPrice(price);
-          setIsCertified(certified);
+          const details = await diamondContract.getDiamondDetails(product.id);
+          setDiamondDetails(details);
         } catch (error) {
-          console.error('Error fetching diamond data:', error);
+          console.error('Error fetching diamond details:', error);
         }
       }
     }
-    
-    fetchDiamondData();
+
+    fetchDiamondDetails();
   }, [product.id]);
 
-  const handleCardClick = async () => {
-    // 触发合约方法，例如验证钻石的真实性
-    console.log(`Clicked on diamond ${product.id}`);
-    if (onClick) {
-      onClick(product.id);
-    }
-  };
-
-  const handleBuyDiamond = async () => {
-    // 调用购买钻石合约方法
-    if (diamondPrice > 0) {
-      console.log(`Buying diamond ${product.id} for ${diamondPrice}`);
-      const contracts = await getContracts();
-      const { diamondContract } = contracts;
-      await diamondContract.buyDiamond(product.id, { value: diamondPrice }); // 执行购买操作
-    }
-  };
-
   return (
-    <StyledCard onClick={handleCardClick}>
+    <StyledCard onClick={onClick}>
       <Box sx={{ position: 'relative' }}>
         <CardMedia
           component="img"
           height="200"
-          image={diamondData ? diamondData.imageUrl : product.imageUrl}  // 动态加载合约数据中的图像
+          image={product.imageUrl}
           alt={product.name}
         />
         <CertifiedBadge
           icon={<VerifiedIcon />}
-          label={isCertified ? "Certified" : "Unverified"}
+          label="certified"
         />
       </Box>
       <CardContent>
@@ -94,8 +78,13 @@ const ProductCard = ({ product, onClick }) => {
           {product.name}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-          {diamondData ? diamondData.description : product.description}
+          {product.description}
         </Typography>
+        {diamondDetails && (
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            Weight: {diamondDetails.weight} carats, Color: {diamondDetails.color}, Clarity: {diamondDetails.clarity}, Cut: {diamondDetails.cut}
+          </Typography>
+        )}
         <Typography variant="h5" sx={{ 
           color: '#1a237e',
           fontWeight: 'bold',
@@ -103,18 +92,8 @@ const ProductCard = ({ product, onClick }) => {
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
         }}>
-          ¥ {diamondPrice ? diamondPrice.toLocaleString() : product.price.toLocaleString()}
+          ¥ {product.price.toLocaleString()}
         </Typography>
-
-        {/* 买钻石按钮 */}
-        <Button 
-          variant="contained" 
-          color="primary" 
-          sx={{ mt: 2 }}
-          onClick={handleBuyDiamond}
-        >
-          Buy Diamond
-        </Button>
       </CardContent>
     </StyledCard>
   );

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ethers } from 'ethers'; // Import ethers.js for interacting with the blockchain
 import { styled } from '@mui/material/styles';
 import {
   Container,
@@ -21,6 +22,21 @@ import DownloadIcon from '@mui/icons-material/Download';
 import ShareIcon from '@mui/icons-material/Share';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import { useNavigate } from 'react-router-dom';
+
+// Import the ABI and the deployed addresses for the smart contracts
+import deployedAddresses from '../../config/deployedAddresses.json';
+import DiamondTraceabilityNFT from '../../config/DiamondTraceabilityNFT.json';
+
+const DiamondTraceabilityNFTABI = DiamondTraceabilityNFT.abi; // Ensure the path is correct for the ABI file
+
+// Initialize Ethereum provider and contract instance
+let provider, signer, diamondContract;
+
+if (typeof window.ethereum !== 'undefined') {
+  provider = new ethers.providers.Web3Provider(window.ethereum);
+  signer = provider.getSigner();
+  diamondContract = new ethers.Contract(deployedAddresses.DiamondTraceabilityNFT, DiamondTraceabilityNFTABI, signer);
+}
 
 // Custom style components
 const GlassContainer = styled(Paper)(({ theme }) => ({
@@ -67,7 +83,7 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 
 const Certificates = () => {
   const navigate = useNavigate();
-  const [myDiamonds] = useState([
+  const [myDiamonds, setMyDiamonds] = useState([
     {
       id: 'DIA001',
       purchaseDate: '2024-01-15',
@@ -93,6 +109,39 @@ const Certificates = () => {
       status: 'pending'
     }
   ]);
+
+  useEffect(() => {
+    async function fetchDiamonds() {
+      if (diamondContract) {
+        try {
+          const address = await signer.getAddress();
+          const diamondIds = await diamondContract.getDiamondsOwnedBy(address);
+          const diamondDetails = await Promise.all(
+            diamondIds.map(async (id) => {
+              const details = await diamondContract.getDiamondDetails(id);
+              return {
+                id,
+                purchaseDate: details.purchaseDate,
+                details: {
+                  weight: details.weight,
+                  color: details.color,
+                  clarity: details.clarity,
+                  cut: details.cut,
+                },
+                certificateNo: details.certificateNo,
+                status: details.status,
+              };
+            })
+          );
+          setMyDiamonds(diamondDetails);
+        } catch (error) {
+          console.error('Error fetching diamond details:', error);
+        }
+      }
+    }
+
+    fetchDiamonds();
+  }, []);
 
   const handleDownloadCertificate = (diamondId) => {
     console.log('Downloading certificate for:', diamondId);

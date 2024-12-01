@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
+import Web3 from 'web3';
 import {
   Container,
   Paper,
@@ -13,13 +14,14 @@ import {
   Divider,
   Chip,
   Fade,
-  Zoom
+  Zoom,
+  CircularProgress
 } from '@mui/material';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import SearchIcon from '@mui/icons-material/Search';
-
-import { getDiamondDetails, verifyDiamond } from './utils/contract';  // 引入合约方法
+import deployedAddresses from '../../config/deployedAddresses.json';
+import DiamondTraceabilityNFT from '../../config/DiamondTraceabilityNFT.json';
 
 // Custom Style Component
 const GlassContainer = styled(Paper)(({ theme }) => ({
@@ -72,27 +74,42 @@ const ResultCard = styled(Card)(({ theme }) => ({
 const Verify = () => {
   const [searchId, setSearchId] = useState('');
   const [verificationResult, setVerificationResult] = useState(null);
-  const [showScanner, setShowScanner] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  // 处理验证按钮点击
+  useEffect(() => {
+    // Placeholder effect if any preloading logic needed
+  }, []);
+
   const handleVerify = async () => {
     if (searchId) {
       try {
-        // 从合约获取钻石详情
-        const diamondDetails = await getDiamondDetails(searchId);
-        
-        // 验证钻石的真实性
-        const isAuthentic = await verifyDiamond(searchId);
+        setLoading(true);
+        const web3 = new Web3(window.ethereum);
+        const contract = new web3.eth.Contract(
+          DiamondTraceabilityNFT.abi,
+          deployedAddresses.DiamondTraceabilityNFT
+        );
 
+        const details = await contract.methods.getDiamondDetails(searchId).call();
         setVerificationResult({
           id: searchId,
-          isAuthentic: isAuthentic,
-          details: diamondDetails,
-          history: diamondDetails.operations || []  // 从合约返回的历史记录
+          isAuthentic: details.isAuthentic,
+          details: {
+            manufacturer: details.manufacturer || "Unknown Manufacturer",
+            manufactureDate: details.manufactureDate,
+            weight: details.weight,
+            color: details.color,
+            clarity: details.clarity,
+            cut: details.cut,
+            certificateNo: details.certificateNo
+          },
+          history: details.history || []
         });
-      } catch (error) {
-        console.error("Error verifying diamond:", error);
+      } catch (err) {
+        console.error('Verification error:', err);
         setVerificationResult(null);
+      } finally {
+        setLoading(false);
       }
     }
   };
@@ -126,7 +143,7 @@ const Verify = () => {
               />
               <GradientButton
                 startIcon={<QrCodeScannerIcon />}
-                onClick={() => setShowScanner(!showScanner)}
+                onClick={() => {}}
               >
                 Scan QR code
               </GradientButton>
@@ -135,10 +152,10 @@ const Verify = () => {
             <Box sx={{ mt: 3, textAlign: 'center' }}>
               <GradientButton
                 onClick={handleVerify}
-                disabled={!searchId}
+                disabled={!searchId || loading}
                 startIcon={<SearchIcon />}
               >
-                Verify Authenticity
+                {loading ? <CircularProgress size={24} color="inherit" /> : 'Verify Authenticity'}
               </GradientButton>
             </Box>
           </Box>
@@ -152,7 +169,7 @@ const Verify = () => {
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <VerifiedIcon sx={{ color: '#89CFF0', fontSize: 30 }} />
                         <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#1a237e' }}>
-                          Verify result
+                          Verification Result
                         </Typography>
                       </Box>
                       <Divider sx={{ borderColor: 'rgba(137, 207, 240, 0.2)' }} />

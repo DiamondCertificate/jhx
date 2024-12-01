@@ -1,10 +1,25 @@
-import { useState, useEffect } from 'react';
-import { Container, Paper, Typography, Timeline, TimelineItem, TimelineSeparator, TimelineConnector, TimelineContent, TimelineDot, Card, CardContent, Box } from '@mui/material';
+import { useEffect, useState } from 'react';
+import {
+  Container,
+  Paper,
+  Typography,
+  Timeline,
+  TimelineItem,
+  TimelineSeparator,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDot,
+  Card,
+  CardContent,
+  Box
+} from '@mui/material';
 import DiamondIcon from '@mui/icons-material/Diamond';
 import FactoryIcon from '@mui/icons-material/Factory';
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import { connectBlockchain, getContracts } from './utils/contract'; // 引入合约功能
+import Web3 from 'web3';
+import deployedAddresses from '../../config/deployedAddresses.json';
+import DiamondTraceabilityNFT from '../../config/DiamondTraceabilityNFT.json';
 
 const TimelineEvent = ({ icon, title, date, description }) => (
   <TimelineItem>
@@ -25,83 +40,94 @@ const TimelineEvent = ({ icon, title, date, description }) => (
 );
 
 const LifecycleTrack = () => {
-  const [searchId, setSearchId] = useState('');
-  const [lifecycleRecords, setLifecycleRecords] = useState([]);
+  const [lifecycleEvents, setLifecycleEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // 获取生命周期记录
-  const handleVerify = async () => {
-    if (searchId) {
+  useEffect(() => {
+    const fetchLifecycleEvents = async () => {
       try {
-        const diamondContract = await connectBlockchain();
-        const lifecycle = await diamondContract.getDiamondLifecycle(searchId); // 获取钻石生命周期记录
+        // Check if MetaMask is installed
+        if (window.ethereum) {
+          const web3 = new Web3(window.ethereum);
+          const contract = new web3.eth.Contract(
+            DiamondTraceabilityNFT.abi,
+            deployedAddresses.DiamondTraceabilityNFT
+          );
 
-        const formattedRecords = lifecycle.map((item) => ({
-          icon: getStatusIcon(item.status),
-          title: item.event,
-          date: item.date,
-          description: item.notes || 'No additional notes',
-        }));
+          // Replace 'someDiamondId' with the actual diamond ID
+          const diamondId = 'someDiamondId';
+          const events = await contract.methods.getDiamondRecord(diamondId).call();
 
-        setLifecycleRecords(formattedRecords);
+          // Transform fetched events to match the TimelineEvent structure
+          const transformedEvents = events.map((event) => {
+            let icon;
+            switch (event.status) {
+              case 'mining':
+                icon = <DiamondIcon />;
+                break;
+              case 'cutting':
+                icon = <FactoryIcon />;
+                break;
+              case 'quality_control':
+                icon = <VerifiedUserIcon />;
+                break;
+              case 'shipping':
+                icon = <LocalShippingIcon />;
+                break;
+              default:
+                icon = <DiamondIcon />;
+            }
+            return {
+              icon,
+              title: event.event,
+              date: event.date,
+              description: event.notes
+            };
+          });
+
+          setLifecycleEvents(transformedEvents);
+        } else {
+          console.error('Please install MetaMask to use this feature.');
+        }
       } catch (error) {
-        console.error("Error fetching lifecycle:", error);
+        console.error('Error fetching lifecycle events:', error);
+      } finally {
+        setLoading(false);
       }
-    }
-  };
+    };
 
-  const getStatusIcon = (status) => {
-    switch (status) {
-      case 'mining':
-        return <DiamondIcon />;
-      case 'cutting':
-        return <FactoryIcon />;
-      case 'quality_control':
-        return <VerifiedUserIcon />;
-      case 'received_by_maker':
-      case 'sold':
-        return <LocalShippingIcon />;
-      default:
-        return <DiamondIcon />;
-    }
-  };
+    fetchLifecycleEvents();
+  }, []);
 
   return (
     <Container maxWidth="md">
       <Paper elevation={3} sx={{ p: 4, mt: 4, borderRadius: 2 }}>
-        <Typography variant="h4" align="center" gutterBottom sx={{ color: '#1976d2', fontWeight: 'bold' }}>
+        <Typography
+          variant="h4"
+          align="center"
+          gutterBottom
+          sx={{ color: '#1976d2', fontWeight: 'bold' }}
+        >
           Diamond Lifecycle Tracking
         </Typography>
 
-        <Box sx={{ mb: 3, display: 'flex', gap: 2, justifyContent: 'center' }}>
-          <Typography variant="body1">Enter Diamond ID:</Typography>
-          <input 
-            type="text" 
-            value={searchId} 
-            onChange={(e) => setSearchId(e.target.value)} 
-            style={{ padding: '5px', borderRadius: '5px' }} 
-          />
-          <button onClick={handleVerify} style={{ padding: '5px', background: '#1976d2', color: 'white', borderRadius: '5px' }}>
-            Verify
-          </button>
-        </Box>
-
-        <Timeline position="alternate">
-          {lifecycleRecords.length > 0 ? (
-            lifecycleRecords.map((record, index) => (
+        {loading ? (
+          <Typography align="center" sx={{ mt: 4 }}>
+            Loading lifecycle events...
+          </Typography>
+        ) : (
+          <Timeline position="alternate">
+            {lifecycleEvents.map((event, index) => (
               <TimelineEvent
                 key={index}
-                icon={record.icon}
-                title={record.title}
-                date={record.date}
-                description={record.description}
+                icon={event.icon}
+                title={event.title}
+                date={event.date}
+                description={event.description}
               />
-            ))
-          ) : (
-            <Typography variant="h6" align="center" sx={{ color: '#666', mt: 4 }}>
-              No lifecycle records found for the provided Diamond ID.
-            </Typography>
-          )}
-        </Timeline>
+            ))}
+          </Timeline>
+        )}
       </Paper>
     </Container>
   );
