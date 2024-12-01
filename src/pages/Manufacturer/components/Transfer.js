@@ -1,10 +1,24 @@
 import { useState } from 'react';
-import { Container, Paper, Typography, Box, Stack, TextField, Button, Card, CardContent, Divider, Chip, Alert } from '@mui/material';
-import { connectBlockchain, getContracts } from './utils/contract'; // 引入合约连接方法
+import Web3 from 'web3';
+import deployedAddresses from '../../config/deployedAddresses.json';
+import DiamondTraceabilityNFT from '../../config/DiamondTraceabilityNFT.json';
+import {
+  Container,
+  Paper,
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Stack,
+  Card,
+  CardContent,
+  Divider,
+  Chip,
+  Alert
+} from '@mui/material';
 import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import TimelineIcon from '@mui/icons-material/Timeline';
-import SearchIcon from '@mui/icons-material/Search';
 
 const Verify = () => {
   const [searchId, setSearchId] = useState('');
@@ -16,40 +30,39 @@ const Verify = () => {
     try {
       setLoading(true);
       setError('');
+      
+      if (!window.ethereum) {
+        throw new Error('MetaMask is not installed.');
+      }
 
-      if (searchId) {
-        // 连接到智能合约
-        const { diamondContract } = await connectBlockchain();
-        
-        // 获取钻石的详细信息
-        const diamondDetails = await diamondContract.getDiamondDetails(searchId);
-        
-        // 获取钻石的生命周期记录
-        const diamondLifecycle = await diamondContract.getDiamondLifecycle(searchId);
-
-        // 格式化并设置钻石的真实性验证结果
-        const formattedResult = {
+      const web3 = new Web3(window.ethereum);
+      const contract = new web3.eth.Contract(
+        DiamondTraceabilityNFT.abi,
+        deployedAddresses.DiamondTraceabilityNFT
+      );
+      
+      const diamondRecord = await contract.methods.getDiamondRecord(searchId).call();
+      
+      if (diamondRecord) {
+        setVerificationResult({
           id: searchId,
-          isAuthentic: diamondDetails.currentHolder !== "0x0000000000000000000000000000000000000000", // 假设地址为0的钻石表示无效
+          isAuthentic: true,
           details: {
-            manufacturer: diamondDetails.manufacturer,
-            manufactureDate: diamondDetails.manufactureDate,
-            weight: diamondDetails.caratWeight,
-            color: diamondDetails.color,
-            clarity: diamondDetails.clarity,
-            cut: diamondDetails.cut,
-            certificateNo: diamondDetails.certificateId,
+            manufacturer: diamondRecord.manufacturer,
+            manufactureDate: diamondRecord.manufactureDate,
+            weight: diamondRecord.weight,
+            color: diamondRecord.color,
+            clarity: diamondRecord.clarity,
+            cut: diamondRecord.cut,
+            certificateNo: diamondRecord.certificateNo
           },
-          history: diamondLifecycle.map(item => ({
-            date: item.date,
-            event: item.operationName,
-            notes: item.remarks,
+          history: diamondRecord.history.map(event => ({
+            date: event.date,
+            event: event.event
           }))
-        };
-
-        setVerificationResult(formattedResult);
+        });
       } else {
-        setError('Please enter the diamond ID or certificate number');
+        setError('No record found for the given ID or certificate number');
       }
     } catch (err) {
       setError('An error occurred during verification, please try again');
@@ -62,7 +75,9 @@ const Verify = () => {
   return (
     <Container maxWidth="md">
       <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
-        <Typography variant="h4" align="center" gutterBottom sx={{ color: '#2E7D32', fontWeight: 'bold' }}>
+        <Typography variant="h4" align="center" gutterBottom 
+                  sx={{ color: '#2E7D32', fontWeight: 'bold' }}
+        >
           Diamond Authenticity Verification
         </Typography>
 
@@ -113,8 +128,8 @@ const Verify = () => {
                 </Stack>
                 <Divider />
                 <Box sx={{ mt: 2 }}>
-                  <Chip
-                    label={verificationResult.isAuthentic ? "Certification Passed" : "Certification Failed"}
+                  <Chip 
+                    label={verificationResult.isAuthentic ? "Certification Passed" : "Certification Failed"} 
                     color={verificationResult.isAuthentic ? "success" : "error"}
                     sx={{ mb: 2 }}
                   />
@@ -122,13 +137,13 @@ const Verify = () => {
                     {Object.entries(verificationResult.details).map(([key, value]) => (
                       <Box key={key} sx={{ display: 'flex', justifyContent: 'space-between' }}>
                         <Typography color="text.secondary">
-                          {key === 'manufacturer' ? 'Manufacturer' :
-                            key === 'manufactureDate' ? 'Manufacture Date' :
-                            key === 'weight' ? 'Weight' :
-                            key === 'color' ? 'Color' :
-                            key === 'clarity' ? 'Clarity' :
-                            key === 'cut' ? 'Cut' :
-                            key === 'certificateNo' ? 'Certificate No' : key}
+                          {key === 'manufacturer' ? 'manufacturer' :
+                           key === 'manufactureDate' ? 'manufactureDate' :
+                           key === 'weight' ? 'weight' :
+                           key === 'color' ? 'color' :
+                           key === 'clarity' ? 'clarity' :
+                           key === 'cut' ? 'cut' :
+                           key === 'certificateNo' ? 'certificateNo' : key}
                         </Typography>
                         <Typography>{value}</Typography>
                       </Box>
@@ -147,8 +162,8 @@ const Verify = () => {
                 <Divider />
                 <Box sx={{ mt: 2 }}>
                   {verificationResult.history.map((item, index) => (
-                    <Box key={index} sx={{
-                      display: 'flex',
+                    <Box key={index} sx={{ 
+                      display: 'flex', 
                       justifyContent: 'space-between',
                       mb: 1,
                       p: 1,
