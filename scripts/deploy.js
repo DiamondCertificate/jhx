@@ -1,5 +1,6 @@
 // Required Libraries
 const { ethers } = require("hardhat");
+const fs = require('fs'); // Import the file system module
 
 async function main() {
   // Get the Contract Factories
@@ -41,6 +42,19 @@ async function main() {
   const jewelrySeller = await JewelrySeller.deploy(diamondTraceabilityNFT.address);
   await jewelrySeller.deployed();
   console.log("JewelrySeller deployed to:", jewelrySeller.address);
+
+  // Save deployed addresses to deployedAddresses.json
+  const deployedAddresses = {
+    AccessControl: accessControl.address,
+    DiamondTraceabilityNFT: diamondTraceabilityNFT.address,
+    MiningCompany: miningCompany.address,
+    CuttingCompany: cuttingCompany.address,
+    GradingLab: gradingLab.address,
+    JewelryMaker: jewelryMaker.address,
+    JewelrySeller: jewelrySeller.address,
+  };
+
+  fs.writeFileSync('deployedAddresses.json', JSON.stringify(deployedAddresses, null, 2));
 }
 
 // Run the deployment script
